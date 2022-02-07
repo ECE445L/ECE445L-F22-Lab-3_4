@@ -1,5 +1,6 @@
-# EE445L-SP22-Lab-2
-Lab 2 template.
+# EE445L-SP22-Lab3_4
+Lab 3 and 4 template. Note that of 2/6/22, the Lab 4 doc may not be updated to
+the latest version. 
 
 ## HW
 

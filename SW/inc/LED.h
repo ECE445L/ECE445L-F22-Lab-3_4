@@ -28,7 +28,7 @@
  http://users.ece.utexas.edu/~valvano/
  */
 
-
+#include <stdint.h>
 
 
 

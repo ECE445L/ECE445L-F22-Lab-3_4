@@ -20,5 +20,4 @@ The first 6 steps have been done for you in this template repository. Click on t
 2. Click on 'Manage Project Items' in the submenu.
 3. In the 'Files' column, click on the 'Add Files' button.
 4. Add the implementation files (.C and .s files) required for the project dependencies into the project. This includes your main file. In particular, make sure you include the startup.s file, since this includes things like interrupt definitions.
-
-#
+5. Compiling the project will automagically link the implementation files to dependency header files. You can then view them from the project window after expanding the implementation file.
