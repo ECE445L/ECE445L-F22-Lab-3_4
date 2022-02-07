@@ -102,7 +102,7 @@ int main(void) {
     LaunchPad_Init();
     
     // WARNING! BRIGHT FLASHING COLORS. DO NOT RUN IF YOU HAVE EPILEPSY.
-    RGBInit();
+    // RGBInit();
 
     EnableInterrupts();
     while(1) {
