@@ -9,7 +9,7 @@
 
 /**
  * @brief RGBInit initializes PF2, PF3, PF4 as LEDs and TIMER_0A to update the
- *        LED states at 1000 Hz. Priority 7 (least important).
+ *        LED states at 15 Hz. Priority 7 (least important).
  */
 void RGBInit(void);
 
