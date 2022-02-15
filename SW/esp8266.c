@@ -24,8 +24,8 @@
 #include <stdint.h>
 #include <string.h>
 #include "inc/tm4c123gh6pm.h"
-#include "UART.h"
-#include "ST7735.h"
+#include "inc/UART.h"
+#include "inc/ST7735.h"
 #include "esp8266.h"
 // the following two lines connect you to the internet
 char    ssid[32]        = "EE-IOT-Platform-03";
