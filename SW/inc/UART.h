@@ -1,17 +1,18 @@
 // UART.h
-// LM4F120, TM4C123, TM4C1294
-// Simple device driver for the UART.
+// Runs on LM4F120/TM4C123
+// Use UART0 to implement bidirectional data transfer to and from a
+// computer running PuTTy. Interrupts and software FIFOs are used.
 // Daniel Valvano
-// Jan 3, 2020
+// September 20, 2018
+#ifndef _UARTH_
+#define _UARTH_
+#include <stdint.h>
+/* This example accompanies the book
+   "Embedded Systems: Real Time Interfacing to Arm Cortex M Microcontrollers",
+   ISBN: 978-1463590154, Jonathan Valvano, copyright (c) 2018
+   Program 5.11 Section 5.6, Program 3.10
 
-/* This example accompanies the books
-  "Embedded Systems: Introduction to ARM Cortex M Microcontrollers",
-  ISBN: 978-1469998749, Jonathan Valvano, copyright (c) 2020
-
-"Embedded Systems: Real Time Interfacing to ARM Cortex M Microcontrollers",
-   ISBN: 978-1463590154, Jonathan Valvano, copyright (c) 2020
- 
- Copyright 2020 by Jonathan W. Valvano, valvano@mail.utexas.edu
+ Copyright 2018 by Jonathan W. Valvano, valvano@mail.utexas.edu
     You may use, edit, run or distribute this file
     as long as the above copyright notice remains
  THIS SOFTWARE IS PROVIDED "AS IS".  NO WARRANTIES, WHETHER EXPRESS, IMPLIED
@@ -34,19 +35,22 @@
 #define SP   0x20
 #define DEL  0x7F
 
-
 //------------UART_Init------------
 // Initialize the UART for 115,200 baud rate (assuming 80 MHz clock),
 // 8 bit word length, no parity bits, one stop bit, FIFOs enabled
 // Input: none
 // Output: none
-void UART_Init(void);
+void UART_Init(uint32_t priority);
 
 //------------UART_InChar------------
 // Wait for new serial port input
 // Input: none
 // Output: ASCII code for key typed
 char UART_InChar(void);
+
+// input ASCII character from UART
+// return 0 if RxFifo is empty
+char UART_InCharNonBlock(void);
 
 //------------UART_OutChar------------
 // Output 8-bit to serial port
@@ -96,13 +100,6 @@ uint32_t UART_InUHex(void);
 // Variable format 1 to 8 digits with no space before or after
 void UART_OutUHex(uint32_t number);
 
-//--------------------------UART_OutUHex2----------------------------
-// Output a 32-bit number in unsigned hexadecimal format
-// Input: 32-bit number to be transferred
-// Output: none
-// Fixed format 2 digits with no space before or after
-void UART_OutUHex2(uint32_t number);
-
 //------------UART_InString------------
 // Accepts ASCII characters from the serial port
 //    and adds them to a string until <enter> is typed
@@ -117,10 +114,4 @@ void UART_OutUHex2(uint32_t number);
 // -- Modified by Agustinus Darmawan + Mingjie Qiu --
 void UART_InString(char *bufPt, uint16_t max);
 
-//------------Output_Init------------
-// Initialize the UART for 115,200 baud rate (assuming 16 MHz bus clock),
-// 8 bit word length, no parity bits, one stop bit, FIFOs enabled
-// Input: none
-// Output: none
-void Output_Init(void);
-
+#endif

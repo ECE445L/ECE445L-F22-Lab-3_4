@@ -38,12 +38,12 @@
 #include <string.h>
 #include <stdlib.h>
 #include "inc/tm4c123gh6pm.h"
-#include "ST7735.h"
-#include "PLL.h"
-#include "Timer2.h"
-#include "Timer3.h"
-#include "UART.h"
-#include "PortF.h"
+#include "inc/ST7735.h"
+#include "inc/PLL.h"
+#include "inc/Timer2A.h"
+#include "inc/Timer3A.h"
+#include "inc/UART.h"
+#include "inc/PortF.h"
 #include "esp8266.h"
 
 void EnableInterrupts(void);    // Defined in startup.s
@@ -161,10 +161,10 @@ int main(void){
   ESP8266_Reset();      // Reset the WiFi module
   ESP8266_SetupWiFi();  // Setup communications to Blynk Server  
   
-  Timer2_Init(&Blynk_to_TM4C,800000); 
+  Timer2A_Init(&Blynk_to_TM4C,800000,4); 
   // check for receive data from Blynk App every 10ms
 
-  Timer3_Init(&SendInformation,40000000); 
+  Timer3A_Init(&SendInformation,40000000,4); 
   // Send data back to Blynk App every 1/2 second
   EnableInterrupts();
 
