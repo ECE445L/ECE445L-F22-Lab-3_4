@@ -88,7 +88,7 @@
 #define PF3   (*((volatile uint32_t *)0x40025020)) // GREEN LED
 #define PF4   (*((volatile uint32_t *)0x40025040)) // Right Button
 
-int main(void) {
+int main1(void) {
     DisableInterrupts();
 
     /* TExaS Debug modes:
