@@ -3,6 +3,7 @@
 ## Prerequisites
 1. Hardware is setup (TM4C hooked up to ESP8266 via UART)
 2. ESP8266 is flashed with latest [firmware](https://github.com/ECE445L/EE445L-SP22-ESP8266-Blynk)
+    1. See section [Updating ESP8266](#updating-esp8266)
 
 ## Running Blynk
 1. Log in/Create an account
@@ -37,7 +38,3 @@
     2. Select open port, assuming only one USB device is currently connected
 9. Connect ESP8266 to ECE 445L ESP8266 flasher board (or similar UART-USB FTDI board)
 10. Upload using flash button (rightward facing arrow).
-
-#define BLYNK_TEMPLATE_ID "TMPL9itaIxbX"
-#define BLYNK_DEVICE_NAME "ESP8266 Test"
-#define BLYNK_AUTH_TOKEN "0gywCWfDGwEnhb-BqZB0RyPT_mItJxEe"
