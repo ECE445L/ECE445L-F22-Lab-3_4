@@ -113,7 +113,7 @@ void Timer5A_Stop(void){
 //        bus clock frequency in Hz
 //        baud rate in bps
 // Output: none
-void UART_Init(uint32_t busfrequency, uint32_t baud){
+void TExaS_UART_Init(uint32_t busfrequency, uint32_t baud){
   SYSCTL_RCGCUART_R |= 0x01; // activate UART0
   SYSCTL_RCGCGPIO_R |= 0x01; // activate port A
   UART0_CTL_R &= ~UART_CTL_UARTEN;      // disable UART
@@ -263,7 +263,7 @@ void LogicAnalyzerF(void){  // called 10k/sec
 void TExaS_Init(enum TExaSmode mode){
   // 10 kHz periodic interrupt
   PLL_Init(Bus80MHz);
-  UART_Init(80000000,115200);
+  TExaS_UART_Init(80000000,115200);
 
 
   if(mode == LOGICANALYZERA){

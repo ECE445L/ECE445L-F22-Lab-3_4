@@ -7,10 +7,10 @@
 
   <Targets>
     <Target>
-      <TargetName>Target 1</TargetName>
+      <TargetName>Lab 3_4</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6150000::V6.15::ARMCLANG</pCCUsed>
+      <pCCUsed>6180000::V6.18::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -112,7 +112,7 @@
           <SimDllName>SARMCM3.DLL</SimDllName>
           <SimDllArguments>  -MPU</SimDllArguments>
           <SimDlgDll>DCM.DLL</SimDlgDll>
-          <SimDlgDllArguments>-pCM4 -dLaunchPadDLL</SimDlgDllArguments>
+          <SimDlgDllArguments>-pCM4</SimDlgDllArguments>
           <TargetDllName>SARMCM3.DLL</TargetDllName>
           <TargetDllArguments> -MPU</TargetDllArguments>
           <TargetDlgDll>TCM.DLL</TargetDlgDll>
@@ -186,6 +186,7 @@
             <RvdsVP>2</RvdsVP>
             <RvdsMve>0</RvdsMve>
             <RvdsCdeCp>0</RvdsCdeCp>
+            <nBranchProt>0</nBranchProt>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -337,7 +338,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>rvmdk PART_LM4F120H5QR</Define>
+              <Define></Define>
               <Undefine></Undefine>
               <IncludePath>./</IncludePath>
             </VariousControls>
@@ -381,42 +382,32 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>Source Group 1</GroupName>
+          <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>ADCSWTrigger.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\inc\ADCSWTrigger.c</FilePath>
+              <FileName>README.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\README.md</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>src</GroupName>
+          <Files>
+            <File>
+              <FileName>Lab3_4.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Lab3_4.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>inc</GroupName>
+          <Files>
             <File>
               <FileName>startup.s</FileName>
               <FileType>2</FileType>
               <FilePath>.\inc\startup.s</FilePath>
-            </File>
-            <File>
-              <FileName>ST7735.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\inc\ST7735.c</FilePath>
-            </File>
-            <File>
-              <FileName>Timer0A.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\inc\Timer0A.c</FilePath>
-            </File>
-            <File>
-              <FileName>Timer1A.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\inc\Timer1A.c</FilePath>
-            </File>
-            <File>
-              <FileName>Timer4A.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\inc\Timer4A.c</FilePath>
-            </File>
-            <File>
-              <FileName>LaunchPad.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\inc\LaunchPad.c</FilePath>
             </File>
             <File>
               <FileName>PLL.c</FileName>
@@ -424,19 +415,39 @@
               <FilePath>.\inc\PLL.c</FilePath>
             </File>
             <File>
-              <FileName>MedianFilter.c</FileName>
+              <FileName>Timer0A.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\lib\Filter\MedianFilter.c</FilePath>
+              <FilePath>.\inc\Timer0A.c</FilePath>
             </File>
             <File>
-              <FileName>RGB.c</FileName>
+              <FileName>Timer2A.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\lib\RGB\RGB.c</FilePath>
+              <FilePath>.\inc\Timer2A.c</FilePath>
             </File>
             <File>
-              <FileName>LED.c</FileName>
+              <FileName>Timer1A.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\inc\LED.c</FilePath>
+              <FilePath>.\inc\Timer1A.c</FilePath>
+            </File>
+            <File>
+              <FileName>Timer3A.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\inc\Timer3A.c</FilePath>
+            </File>
+            <File>
+              <FileName>Timer4A.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\inc\Timer4A.c</FilePath>
+            </File>
+            <File>
+              <FileName>Unified_Port_Init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\inc\Unified_Port_Init.c</FilePath>
+            </File>
+            <File>
+              <FileName>UART.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\inc\UART.c</FilePath>
             </File>
             <File>
               <FileName>Blynk.c</FileName>
@@ -449,19 +460,34 @@
               <FilePath>.\esp8266.c</FilePath>
             </File>
             <File>
-              <FileName>Timer2A.c</FileName>
+              <FileName>TExaS.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\inc\Timer2A.c</FilePath>
+              <FilePath>.\inc\TExaS.c</FilePath>
             </File>
             <File>
-              <FileName>Timer3A.c</FileName>
+              <FileName>LED.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\inc\Timer3A.c</FilePath>
+              <FilePath>.\inc\LED.c</FilePath>
             </File>
             <File>
-              <FileName>UART.c</FileName>
+              <FileName>LaunchPad.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\inc\UART.c</FilePath>
+              <FilePath>.\inc\LaunchPad.c</FilePath>
+            </File>
+            <File>
+              <FileName>RGB.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\lib\RGB\RGB.c</FilePath>
+            </File>
+            <File>
+              <FileName>ST7735.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\inc\ST7735.c</FilePath>
+            </File>
+            <File>
+              <FileName>ADCSWTrigger.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\inc\ADCSWTrigger.c</FilePath>
             </File>
             <File>
               <FileName>PortF.c</FileName>
