@@ -60,8 +60,6 @@
 
 /* Register definitions. */
 #include "./inc/tm4c123gh6pm.h"
-/* Port F switch and LED control. */
-#include "./inc/LaunchPad.h"
 /* Clock delay and interrupt control. */
 #include "./inc/CortexM.h"
 /* External debug monitor stuff. */
@@ -80,6 +78,8 @@
 /* Add whatever else you need here! */
 #include "./lib/RGB/RGB.h"
 
+#include "./inc/Unified_Port_Init.h"
+
 
 /** MMAP Pin definitions. */
 #define PF0   (*((volatile uint32_t *)0x40025004)) // Left Button
@@ -88,7 +88,22 @@
 #define PF3   (*((volatile uint32_t *)0x40025020)) // GREEN LED
 #define PF4   (*((volatile uint32_t *)0x40025040)) // Right Button
 
-int main1(void) {
+/** Function declarations. */
+/**
+ * @brief DelayWait10ms delays the current process by n*10ms. Approximate.
+ * 
+ * @param n Number of times to delay 10ms.
+ * @note Based on a 80MHz clock.
+ */
+void DelayWait10ms(uint32_t n);
+
+/**
+ * @brief Blocks the current process until PF4 (Left Button <=> SW1) is pressed.
+ */
+void Pause(void);
+
+/** Main functions */
+int main(void) {
     DisableInterrupts();
 
     /* TExaS Debug modes:
@@ -98,15 +113,70 @@ int main1(void) {
        SCOPE_PE2,       // PE3
        SCOPE_PB5        // PB5
      */
+
+    // PLL Init
+    // UART debug init (115200baud)
     TExaS_Init(SCOPE);
-    LaunchPad_Init();
+    // Stop capture for now.
+    TExaS_Stop();
+    // Note: Call TExaS_Start to restart sampling. Preferably do this when UART_OutString
+
+    // Start up display
+    ST7735_InitR(INITR_REDTAB);
+
+    // Initialize all ports.
+    Unified_Port_Init();
     
     // WARNING! BRIGHT FLASHING COLORS. DO NOT RUN IF YOU HAVE EPILEPSY.
-    // RGBInit();
+    RGBInit();
+    // Note: Call RGBStop and RGBStart to halt or restart the RGB.
 
     EnableInterrupts();
+
+    // Output to ST7735
+    ST7735_FillScreen(ST7735_BLACK);
+    ST7735_SetCursor(0,0);
+    ST7735_OutString("EE445L Lab 4D\nBlynk example\n");
+    ST7735_SetCursor(1,0);
+    ST7735_OutString("Press SW1 to start ESP8266 connection.\n");
+    Pause();
+
+    // Setup ESP8266 to talk to Blynk server
+    // TODO: enable this for lab 4
+    // DisableInterrupts();
+    // ESP8266_Init();       // Enable ESP8266 Serial Port
+    // ESP8266_Reset();      // Reset the WiFi module
+    // ESP8266_SetupWiFi();  // Setup communications to Blynk Server  
+
+    // Timer2A_Init(&Blynk_to_TM4C,800000,4); 
+    // check for receive data from Blynk App every 10ms
+    // Timer3A_Init(&SendInformation,40000000,4); 
+    // Send data back to Blynk App every 1/2 second
+    // EnableInterrupts();
+
     while(1) {
         WaitForInterrupt();
     }
     return 1;
+}
+
+/** Function Implementations. */
+void DelayWait10ms(uint32_t n) {
+    uint32_t volatile time;
+    while(n){
+        time = 727240*2/91;  // 10msec
+        while(time){
+            time--;
+        }
+        n--;
+    }
+}
+
+void Pause(void) {
+    while(PF4==0x00) {
+        DelayWait10ms(10);
+    }
+    while(PF4==0x10) {
+        DelayWait10ms(10);
+    }
 }

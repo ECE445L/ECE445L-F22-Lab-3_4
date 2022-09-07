@@ -56,5 +56,8 @@ void TExaS_Init(enum TExaSmode mode);
 // Outputs: none
 void TExaS_Stop(void);
 
-
-
+// ************TExaS_Start*****************
+// Start the transfer
+// Inputs:  none
+// Outputs: none
+void TExaS_Start(void);

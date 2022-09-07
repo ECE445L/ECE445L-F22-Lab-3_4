@@ -113,7 +113,7 @@ void Port_A_Init(void){
 // ----------------    PORT B Initialization   --------------------------------
 // ----------------------------------------------------------------------------
 //
-// PB7 = PWM Ouptut to JP6 (M0PWM1)
+// PB7 = PWM Output to JP6 (M0PWM1)
 // PB6 = PWM Output to Motor (M0PWM0)
 // PB5 = ADC Input (AIN11)
 // PB4 = Timer Capture input (T1CCP0)

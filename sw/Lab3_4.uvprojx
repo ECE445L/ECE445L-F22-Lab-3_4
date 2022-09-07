@@ -494,6 +494,11 @@
               <FileType>1</FileType>
               <FilePath>.\inc\PortF.c</FilePath>
             </File>
+            <File>
+              <FileName>Timer5A.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\inc\Timer5A.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

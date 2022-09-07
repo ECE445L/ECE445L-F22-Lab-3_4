@@ -52,7 +52,31 @@ void Timer5A_Handler(void){
   TIMER5_ICR_R = TIMER_ICR_TATOCINT;// acknowledge TIMER5A timeout
   (*PeriodicTask5)();               // execute user task
 }
-void Timer5_Stop(void){
-  NVIC_DIS2_R = 1<<28;          // 9) disable interrupt 92 in NVIC
-  TIMER5_CTL_R = 0x00000000;    // 10) disable timer5A
+
+// ***************** Timer5A_Start ****************
+// Reactivate the interrupt running a user task
+// periodically.
+// Input: none
+// Output: none
+void Timer5A_Start(void) {
+  if(SYSCTL_RCGCTIMER_R&0x20){
+    // prevent hardware fault if PeriodicTask2_Init() has not been called
+    TIMER5_ICR_R = TIMER_ICR_TATOCINT;// clear TIMER5A timeout flag
+    NVIC_EN2_R = 1<<28;           // enable IRQ 92 in NVIC
+    TIMER5_CTL_R = 0x00000001;    // 10) enable TIMER5A
+  }
+}
+
+// ***************** Timer5A_Start ****************
+// Deactivate the interrupt running a user task
+// periodically.
+// Input: none
+// Output: none
+void Timer5A_Stop(void){
+  if(SYSCTL_RCGCTIMER_R&0x20){
+    // prevent hardware fault if PeriodicTask2_Init() has not been called
+    TIMER5_ICR_R = TIMER_ICR_TATOCINT;// clear TIMER5A timeout flag
+    NVIC_DIS2_R = 1<<28;           // disable IRQ 92 in NVIC
+    TIMER5_CTL_R = 0x00000000;    // 10) disable timer5A
+  }
 }

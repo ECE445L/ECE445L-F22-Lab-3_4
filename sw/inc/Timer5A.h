@@ -1,8 +1,8 @@
 // Timer5A.h
 // Runs on LM4F120/TM4C123
 // Use Timer5 in 32-bit periodic mode to request interrupts at a periodic rate
-// Daniel Valvano
-// Jan 1, 2020
+// Daniel Valvano & Matthew Yu
+// September 6, 2022
 
 /* This example accompanies the book
    "Embedded Systems: Real Time Interfacing to Arm Cortex M Microcontrollers",
@@ -20,6 +20,7 @@
  For more information about my classes, my research, and my books, see
  http://users.ece.utexas.edu/~valvano/
  */
+#pragma once
 #include <stdint.h>
 // ***************** Timer5A_Init ****************
 // Activate Timer5 interrupts to run user task periodically
@@ -29,4 +30,16 @@
 // Outputs: none
 void Timer5A_Init(void(*task)(void), uint32_t period, uint32_t priority);
 
+// ***************** Timer5A_Start ****************
+// Reactivate the interrupt running a user task
+// periodically.
+// Input: none
+// Output: none
+void Timer5A_Start(void);
+
+// ***************** Timer5A_Start ****************
+// Deactivate the interrupt running a user task
+// periodically.
+// Input: none
+// Output: none
 void Timer5A_Stop(void);

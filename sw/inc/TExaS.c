@@ -29,6 +29,7 @@
 #include <stdint.h>
 #include "../inc/CortexM.h"
 #include "../inc/tm4c123gh6pm.h"
+#include "../inc/Timer5A.h"
 #include "../inc/TExaS.h"
 #include "../inc/PLL.h"
 
@@ -36,69 +37,6 @@
 void Scope(void){  // called 10k/sec
   UART0_DR_R = (ADC1_SSFIFO3_R>>4); // send ADC to TExaSdisplay
 }
-// ------------PeriodicTask2_Init------------
-// Activate an interrupt to run a user task periodically.
-// Give it a priority 0 to 6 with lower numbers
-// signifying higher priority.  Equal priority is
-// handled sequentially.
-// Input:  task is a pointer to a user function
-//         Bus clock frequency in Hz
-//         freq is number of interrupts per second
-//           1 Hz to 10 kHz
-//         priority is a number 0 to 6
-// Output: none
-void (*PeriodicTask5)(void);   // user function
-void Timer5A_Init(void(*task)(void), 
-  uint32_t busfrequency, uint32_t freq, uint8_t priority){long sr;
-  if((freq == 0) || (freq > 10000)){
-    return;                        // invalid input
-  }
-  if(priority > 6){
-    priority = 6;
-  }
-  sr = StartCritical();
-  PeriodicTask5 = task;            // user function
-  // ***************** Timer5 initialization *****************
-  SYSCTL_RCGCTIMER_R |= 0x20;      // 0) activate clock for Timer5
-  while((SYSCTL_PRTIMER_R&0x20) == 0){};// allow time for clock to stabilize
-  TIMER5_CTL_R &= ~TIMER_CTL_TAEN; // 1) disable Timer5A during setup
-                                   // 2) configure for 32-bit timer mode
-  TIMER5_CFG_R = TIMER_CFG_32_BIT_TIMER;
-                                   // 3) configure for periodic mode, default down-count settings
-  TIMER5_TAMR_R = TIMER_TAMR_TAMR_PERIOD;
-                                   // 4) reload value
-  TIMER5_TAILR_R = (busfrequency/freq - 1);
-  TIMER5_TAPR_R = 0;               // 5) bus clock resolution
-                                   // 6) clear TIMER5A timeout flag
-  TIMER5_ICR_R = TIMER_ICR_TATOCINT;
-  TIMER5_IMR_R |= TIMER_IMR_TATOIM;// 7) arm timeout interrupt
-                                   // 8) priority
-  NVIC_PRI23_R = (NVIC_PRI23_R&0xFFFFFF00)|(priority<<5);
-// interrupts enabled in the main program after all devices initialized
-// vector number 108, interrupt number 92
-  NVIC_EN2_R = 1<<28;              // 9) enable IRQ 92 in NVIC
-  TIMER5_CTL_R |= TIMER_CTL_TAEN;  // 10) enable Timer5A 32-b
-  EndCritical(sr);
-}
-
-void Timer5A_Handler(void){
-  TIMER5_ICR_R = TIMER_ICR_TATOCINT;// acknowledge TIMER5A timeout
-  (*PeriodicTask5)();              // execute user task
-}
-
-// ------------PeriodicTask2_Stop------------
-// Deactivate the interrupt running a user task
-// periodically.
-// Input: none
-// Output: none
-void Timer5A_Stop(void){
-  if(SYSCTL_RCGCTIMER_R&0x20){
-    // prevent hardware fault if PeriodicTask2_Init() has not been called
-    TIMER5_ICR_R = TIMER_ICR_TATOCINT;// clear TIMER5A timeout flag
-    NVIC_DIS2_R = 1<<28;           // disable IRQ 92 in NVIC
-  }
-}
-
 
 #define UART_FR_TXFF            0x00000020  // UART Transmit FIFO Full
 #define UART_FR_RXFE            0x00000010  // UART Receive FIFO Empty
@@ -269,52 +207,50 @@ void TExaS_Init(enum TExaSmode mode){
   if(mode == LOGICANALYZERA){
   // enable 10k periodic interrupt if logic analyzer mode
    SYSCTL_RCGCGPIO_R |= 0x01; // port A needs to be on
-   Timer5A_Init(&LogicAnalyzerA,80000000,10000,5); // run logic analyzer
+   Timer5A_Init(&LogicAnalyzerA,80000000/10000,5); // run logic analyzer
    EnableInterrupts();
   }
   if(mode == LOGICANALYZERB){
   // enable 10k periodic interrupt if logic analyzer mode
    SYSCTL_RCGCGPIO_R |= 0x02; // port B needs to be on
-   Timer5A_Init(&LogicAnalyzerB,80000000,10000,5); // run logic analyzer
+   Timer5A_Init(&LogicAnalyzerB,80000000/10000,5); // run logic analyzer
    EnableInterrupts();
   }
   if(mode == LOGICANALYZERC){
   // enable 10k periodic interrupt if logic analyzer mode
    SYSCTL_RCGCGPIO_R |= 0x04; // port C needs to be on
-   Timer5A_Init(&LogicAnalyzerC,80000000,10000,5); // run logic analyzer
+   Timer5A_Init(&LogicAnalyzerC,80000000/10000,5); // run logic analyzer
    EnableInterrupts();
   }
   if(mode == LOGICANALYZERE){
   // enable 10k periodic interrupt if logic analyzer mode
    SYSCTL_RCGCGPIO_R |= 0x10; // port E needs to be on
-   Timer5A_Init(&LogicAnalyzerE,80000000,10000,5); // run logic analyzer
+   Timer5A_Init(&LogicAnalyzerE,80000000/10000,5); // run logic analyzer
    EnableInterrupts();
   }
   if(mode == LOGICANALYZERF){
   // enable 10k periodic interrupt if logic analyzer mode
    SYSCTL_RCGCGPIO_R |= 0x20; // port F needs to be on
-   Timer5A_Init(&LogicAnalyzerF,80000000,10000,5); // run logic analyzer
+   Timer5A_Init(&LogicAnalyzerF,80000000/10000,5); // run logic analyzer
    EnableInterrupts();
   }
   if(mode == SCOPE){
     ADC1_InitPD3();  // activate PD3 as analog input
-    Timer5A_Init(&Scope,80000000,10000,5); // run scope at 10k
+    Timer5A_Init(&Scope,80000000/10000,5); // run scope at 10k
   }
   if(mode == SCOPE_PD2){
     ADC1_Init_PD2();  // activate PD2 as analog input
-    Timer5A_Init(&Scope,80000000,10000,5); // run scope at 10k
+    Timer5A_Init(&Scope,80000000/10000,5); // run scope at 10k
   }
   if(mode == SCOPE_PE2){
     ADC1_Init_PE2();  // activate PE2 as analog input
-    Timer5A_Init(&Scope,80000000,10000,5); // run scope at 10k
+    Timer5A_Init(&Scope,80000000/10000,5); // run scope at 10k
   }
   if(mode == SCOPE_PB5){
     ADC1_Init_PB5();  // activate PB5 as analog input
-    Timer5A_Init(&Scope,80000000,10000,5); // run scope at 10k
+    Timer5A_Init(&Scope,80000000/10000,5); // run scope at 10k
   }
 }
-
-
 
 // ************TExaS_Stop*****************
 // Stop the transfer
@@ -322,4 +258,12 @@ void TExaS_Init(enum TExaSmode mode){
 // Outputs: none
 void TExaS_Stop(void){
   Timer5A_Stop();
+}
+
+// ************TExaS_Start*****************
+// Start the transfer
+// Inputs:  none
+// Outputs: none
+void TExaS_Start(void) {
+  Timer5A_Start();
 }
