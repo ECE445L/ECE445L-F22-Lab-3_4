@@ -22,6 +22,9 @@
  */
 #pragma once
 
+#include <stdbool.h>
+#include <stdint.h>
+
 /**
  * @brief Struct for holding a CSV data entry from Blynk.
  */

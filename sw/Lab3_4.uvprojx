@@ -450,16 +450,6 @@
               <FilePath>.\inc\UART.c</FilePath>
             </File>
             <File>
-              <FileName>Blynk.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Blynk.c</FilePath>
-            </File>
-            <File>
-              <FileName>esp8266.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\esp8266.c</FilePath>
-            </File>
-            <File>
               <FileName>TExaS.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\inc\TExaS.c</FilePath>
@@ -498,6 +488,16 @@
               <FileName>Timer5A.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\inc\Timer5A.c</FilePath>
+            </File>
+            <File>
+              <FileName>esp8266_blynk.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\inc\esp8266_blynk.c</FilePath>
+            </File>
+            <File>
+              <FileName>Blynk.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\inc\Blynk.c</FilePath>
             </File>
           </Files>
         </Group>
