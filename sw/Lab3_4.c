@@ -143,16 +143,16 @@ int main(void) {
 
     // Setup ESP8266 to talk to Blynk server
     // TODO: enable this for lab 4
-    // DisableInterrupts();
-    // ESP8266_Init();       // Enable ESP8266 Serial Port
-    // ESP8266_Reset();      // Reset the WiFi module
-    // ESP8266_SetupWiFi();  // Setup communications to Blynk Server  
+    DisableInterrupts();
+    ESP8266_Init();       // Enable ESP8266 Serial Port
+    ESP8266_Reset();      // Reset the WiFi module
+    ESP8266_SetupWiFi();  // Setup communications to Blynk Server  
 
-    // Timer2A_Init(&Blynk_to_TM4C,800000,4); 
+    Timer2A_Init(&Blynk_to_TM4C,800000,4); 
     // check for receive data from Blynk App every 10ms
-    // Timer3A_Init(&SendInformation,40000000,4); 
+    Timer3A_Init(&SendInformation,40000000,4); 
     // Send data back to Blynk App every 1/2 second
-    // EnableInterrupts();
+    EnableInterrupts();
 
     while(1) {
         WaitForInterrupt();
