@@ -11,10 +11,10 @@
 3. Create a new device and use Quickstart Template
 4. You are provided a BLYNK template ID, device name, and auth token
     1. Only need the auth token
-5. Update esp8266.c auth variable with auth token
-6. Update SSID and password with the network you want to connect to (either Lab IOT WiFi or hotspot)
-7. Flash to TM4C
-8. If the HW is setup properly, then Blynk should say the device is online.
+5. Use the blynk_init function call to pass in your auth token, SSID, and password to connect to Blynk!
+	1. We suggest the SSID and PASS to correspond to the Lab IOT WiFi or hotspot.
+6. Compile and flash program to TM4C
+7. If the HW is setup properly, then Blynk should say the device is online.
 
 ## Updating ESP8266
 1. Download the [Arduino IDE](https://www.arduino.cc/en/software)
