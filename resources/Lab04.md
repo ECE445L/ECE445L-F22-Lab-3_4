@@ -1,5 +1,7 @@
 # Lab 4 Internet of Things
 
+> This document is under construction. Please see again in v2.1!
+
 ## Table of Contents
 0. [Repository Structure](#0-repository-structure)
     1. [HW](#01-hw)

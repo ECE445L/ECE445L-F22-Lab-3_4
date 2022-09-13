@@ -1,29 +1,38 @@
 # Lab 3 Alarm Clock
 
 ## Table of Contents
-0. [Repository Structure](#0-repository-structure)
-    1. [HW](#01-hw)
-    2. [SW](#02-sw)
-    3. [Resources](#03-resources)
-    4. [Git and Github](#04-git-and-github)
-1. [Summary](#1-summary)
-    1. [Goal](#11-goal)
-    2. [Team Size](#12-team-size)
-    3. [Background](#13-background)
-    4. [Required Hardware](#14-required-hardware-ee445l-students-purchase-these-parts-for-themselves)
-    5. [Required Parts](#15-required-parts-available-in-ece-checkout-desk)
-    6. [Requirements Document](#16-requirements-document)
-2. [Preparation](#2-preparation)
-3. [Procedure](#3-procedure)
-    1. [Build Circuit](#31-build-circuit)
-    2. [Measure Noise](#32-measure-noise)
-    3. [Measure Speaker Voltage](#33-measure-speaker-voltage)
-    4. [Current Draw](#34-measure-current-draw)
-4. [Checkout](#4-checkout)
-5. [Report](#5-lab-report)
-    1. [Deliverables](#51-deliverables)
-    2. [Analysis and Discussion Questions](#52-analysis-and-discussion-give-short-1-or-two-sentence-answers-to-these-questions)
-6. [Hints](#6-hints)
+- [Lab 3 Alarm Clock](#lab-3-alarm-clock)
+  - [Table of Contents](#table-of-contents)
+  - [0 Repository Structure](#0-repository-structure)
+    - [0.1 HW](#01-hw)
+    - [0.2 SW](#02-sw)
+    - [0.3 Resources](#03-resources)
+    - [0.4 Git and Github](#04-git-and-github)
+  - [1 Summary](#1-summary)
+    - [1.1 Goal](#11-goal)
+    - [1.2 Team Size:](#12-team-size)
+    - [1.3 Background](#13-background)
+    - [1.4 Required Hardware (ECE445L students purchase these parts for themselves)](#14-required-hardware-ece445l-students-purchase-these-parts-for-themselves)
+    - [1.5 Required Parts (available in ECE checkout desk)](#15-required-parts-available-in-ece-checkout-desk)
+    - [1.6 Requirements document](#16-requirements-document)
+  - [2 Preparation](#2-preparation)
+  - [3 Procedure](#3-procedure)
+    - [3.1 Build Circuit](#31-build-circuit)
+      - [Deliverable 1a](#deliverable-1a)
+      - [Deliverable 1b](#deliverable-1b)
+    - [3.2 Measure Noise](#32-measure-noise)
+      - [Deliverable 2](#deliverable-2)
+    - [3.3 Measure Speaker Voltage](#33-measure-speaker-voltage)
+      - [Deliverable 3a (real oscilloscope)](#deliverable-3a-real-oscilloscope)
+      - [Deliverable 3b (TExaS oscilloscope)](#deliverable-3b-texas-oscilloscope)
+    - [3.4 Measure Current Draw](#34-measure-current-draw)
+- [TODO add voltage supply to measure current](#todo-add-voltage-supply-to-measure-current)
+      - [Deliverable 4](#deliverable-4)
+  - [4 Checkout](#4-checkout)
+  - [5 Lab Report](#5-lab-report)
+    - [5.1 Deliverables](#51-deliverables)
+    - [5.2 Analysis and Discussion (give short 1 or two sentence answers to these questions)](#52-analysis-and-discussion-give-short-1-or-two-sentence-answers-to-these-questions)
+  - [6 Hints](#6-hints)
 
 ---
 
@@ -58,10 +67,10 @@ A gitignore file is added to the root of this repo that may prevent specific fil
 
 ---
 
-## 1 Summery
+## 1 Summary
 
 ### 1.1 Goal
-Labs in EE445L are extremely open ended. For Labs 3, 4 and 5 you will be given a requirements document. Your TA is your client or customer. A grade of B can be achieved by satisfying these minimum specifications. To achieve higher grades, you are expected to expand sections 2.1 and 2.5 describing what your system will do. You are free to make any changes to this document as long you achieve the educational goals for the lab. All changes must be approved by your TA. Excellent grades are reserved for systems with extra features and are easy to operate. You will need your LaunchPad and color LCD. From checkout you can borrow speaker, switches, IRLD024 or IRLD120 MOSFET, 1N914, and some resistors for this lab.
+Labs in ECE445L are extremely open ended. For Labs 3, 4 and 5 you will be given a [requirements document](Requirements%20Document.docx). Your TA is your client or customer. A grade of B can be achieved by satisfying the minimum specifications listed by the document. To achieve higher grades, you are expected to expand sections 2.1 and 2.5 describing what your system will do. You are free to make any changes to this document as long you achieve the educational goals for the lab. All changes must be approved by your TA. Excellent grades are reserved for systems with extra features and are easy to operate. You will need your LaunchPad and color LCD. From checkout you can borrow speaker, switches, IRLD024 or IRLD120 MOSFET, 1N914, and some resistors for this lab. 
 
 ### 1.2 Team Size:
 The team size for this lab is 2.
@@ -71,7 +80,7 @@ The team size for this lab is 2.
 ### 1.3 Background
 Labs in EE445L are extremely open ended. For Labs 3, 4 and 5 you will be given a requirements document. Your TA is your client or customer. A grade of B can be achieved by satisfying these minimum specifications. To achieve higher grades, you are expected to expand sections 2.1 and 2.5 describing what your system will do. You are free to make any changes to this document as long you achieve the educational goals for the lab. All changes must be approved by your TA. Excellent grades are reserved for systems with extra features and are easy to operate. You will need your LaunchPad and color LCD. From checkout you can borrow speaker, switches, IRLD024 or IRLD120 MOSFET, 1N914, and some resistors for this lab.
 
-### 1.4 Required Hardware (EE445L students purchase these parts for themselves)
+### 1.4 Required Hardware (ECE445L students purchase these parts for themselves)
 | Part                          | Website                                                                       | Price     |
 | ----------------------------- | ----------------------------------------------------------------------------- | --------- |
 | EK-TM4C123GXL                 | [http://www.ti.com](http://www.ti.com)                                        | $12.99    |

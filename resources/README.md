@@ -1,6 +1,6 @@
 # EE445L-SP22-Lab3_4
-Lab 3 and 4 template. Note that of 2/6/22, the Lab 4 doc may not be updated to
-the latest version. 
+Lab 3 Template. Note that of 09/13/22, the Lab 4 instructions are not up to
+date and are subject to change. Drastically. 
 
 ## HW
 
@@ -36,7 +36,10 @@ TM4C_System_Design_Guidelines page.
 
 ## Git and Github
 
-We will extensively use Git and Github for managing lab projects. This makes it easier for TAs to grade and help debug the project by allowing us to see commit histories, maintain a common project structure, and 
+We will extensively use Git and Github for managing lab projects. This makes it
+easier for TAs to grade and help debug the project by allowing us to see commit
+histories, maintain a common project structure, and so forth.
+
 Likewise, it makes it easier for students to collaborate with partners, merge
 different codebases, and to debug their work by having a history of commits. 
 
