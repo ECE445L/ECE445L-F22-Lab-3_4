@@ -144,9 +144,9 @@ int main(void) {
     /* Setup ESP8266 to talk to Blynk server. See blynk.h for what each field does. */
     // TODO: enable this for lab 4
 		#if LAB_4
-			#define USE_TIMER_INTERRUPT true
-			// blynk_init("EE-IOT-Platform-03", "g!TyA>hR2JTy", "1234567890", USE_TIMER_INTERRUPT);
-			// #undef USE_TIMER_INTERRUPT
+			  #define USE_TIMER_INTERRUPT true
+			  // blynk_init("EE-IOT-Platform-03", "g!TyA>hR2JTy", "1234567890", USE_TIMER_INTERRUPT);
+			  // #undef USE_TIMER_INTERRUPT
 		#endif
 
     while (1) {
@@ -159,20 +159,20 @@ int main(void) {
 /** Function Implementations. */
 void DelayWait10ms(uint32_t n) {
     uint32_t volatile time;
-    while(n){
-        time = 727240*2/91;  // 10msec
-        while(time){
-            time--;
+    while (n){
+        time = 727240 * 2 / 91;  // 10msec
+        while (time){
+            --time;
         }
-        n--;
+        --n;
     }
 }
 
 void Pause(void) {
-    while(PF4==0x00) {
+    while (PF4 == 0x00) {
         DelayWait10ms(10);
     }
-    while(PF4==0x10) {
+    while (PF4 == 0x10) {
         DelayWait10ms(10);
     }
 }
