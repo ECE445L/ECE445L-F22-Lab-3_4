@@ -70,7 +70,12 @@ A gitignore file is added to the root of this repo that may prevent specific fil
 ## 1 Summary
 
 ### 1.1 Goals
-Labs in ECE445L are extremely open ended. For Labs 3, 4 and 5 you will be given a [requirements document](Requirements%20Document.docx). Your TA is your client or customer. A grade of B can be achieved by satisfying the minimum specifications listed by the document. To achieve higher grades, you are expected to expand sections 2.1 and 2.5 describing what your system will do. You are free to make any changes to this document as long you achieve the educational goals for the lab. All changes must be approved by your TA. Excellent grades are reserved for systems with extra features and are easy to operate. You will need your LaunchPad and color LCD. From checkout you can borrow speaker, switches, IRLD024 or IRLD120 MOSFET, 1N914, and some resistors for this lab. 
+* Develop a graphics driver for the LCD that can plot lines and circles
+* Design a hardware/software interface for a keyboard or individual switches
+* Design a hardware/software driver for generating a simple tone on a speaker
+* Measure supply current necessary to run the embedded system
+* Implement a digital alarm clock using periodic interrupts
+
 
 ### 1.2 Review
 * Valvano Section 3.4 on developing modular software
@@ -85,7 +90,7 @@ The team size for this lab is 2.
 > Two shall be the number thou shalt count, and the number of the counting shall be two. Three shalt thou not count, neither count thou one, excepting that thou then proceed to two. Four is right out.
 
 ### 1.4 Background
-Labs in EE445L are extremely open ended. For Labs 3, 4 and 5 you will be given a requirements document. Your TA is your client or customer. A grade of B can be achieved by satisfying these minimum specifications. To achieve higher grades, you are expected to expand sections 2.1 and 2.5 describing what your system will do. You are free to make any changes to this document as long you achieve the educational goals for the lab. All changes must be approved by your TA. Excellent grades are reserved for systems with extra features and are easy to operate. You will need your LaunchPad and color LCD. From checkout you can borrow speaker, switches, IRLD024 or IRLD120 MOSFET, 1N914, and some resistors for this lab.
+Labs in ECE445L are extremely open ended. For Labs 3, 4 and 5 you will be given a [requirements document](Requirements%20Document.docx). Your TA is your client or customer. A grade of B can be achieved by satisfying the minimum specifications listed by the document. To achieve higher grades, you are expected to expand sections 2.1 and 2.5 describing what your system will do. You are free to make any changes to this document as long you achieve the educational goals for the lab. All changes must be approved by your TA. Excellent grades are reserved for systems with extra features and are easy to operate. You will need your LaunchPad and color LCD. From checkout you can borrow speaker, switches, IRLD024 or IRLD120 MOSFET, 1N914, and some resistors for this lab. 
 
 ### 1.5 Required Hardware (ECE445L students purchase these parts for themselves)
 | Part                          | Website                                                                       | Price     |
@@ -101,7 +106,7 @@ Labs in EE445L are extremely open ended. For Labs 3, 4 and 5 you will be given a
 | Tactile switch        | 653-B3F-1050      | B3F-1050          | SW405-ND          | $0.29 |
 | Speaker (8 or 32 ohm) |                   |                   |                   |       |
 
-Any 8 to 32 ohm speaker will suffice, search speaker at
+Any 8 to 32 ohm speaker will suffice, search for a speaker at
 * [https://www.mouser.com](https://www.mouser.com)
 * [https://www.digikey.com](https://www.digikey.com)
 * [https://www.element14.com](https://www.element14.com)
