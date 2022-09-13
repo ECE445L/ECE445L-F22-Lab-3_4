@@ -44,11 +44,11 @@ void tm4c_to_blynk(const blynk_info_t info) {
     if (info.pin_number < 70 || info.pin_number > 99) return;
 
     /* Output CSV string to ESP8266 in format <Virtual pin number>,<value>,0.0\n */
-    ESP8266_OutUDec(info.pin_number);
+    ESP8266_OutInteger(info.pin_number);
     ESP8266_OutChar(',');
-    ESP8266_OutUDec(info.integer_value);
+    ESP8266_OutInteger(info.integer_value);
     ESP8266_OutChar(',');
-    ESP8266_OutUDec(info.float_value);
+    ESP8266_OutInteger(info.float_value);
     ESP8266_OutChar('\n');
 
 #ifdef DEBUG
@@ -122,13 +122,13 @@ void blynk_handler(void) {
 
     /* Early exit if queue is full. */
     if (info_queue_head == (info_queue_tail + NUM_QUEUE_ELEMENTS - 1) % NUM_QUEUE_ELEMENTS) {
-        PF1 = 1;
-        PF3 = 0;
+        PF1 = 0x2;
+        PF3 = 0x0;
         EnableInterrupts();
         return;
     } else {
-        PF1 = 0;
-        PF3 = 1;
+        PF1 = 0x0;
+        PF3 = 0x8;
     }
 
     info_queue[info_queue_head].pin_number = info.pin_number;
@@ -138,10 +138,10 @@ void blynk_handler(void) {
     EnableInterrupts();
 }
 
-void blynk_init(bool use_timer_interrupt) {
+void blynk_init(char *wifi_ssid, char *wifi_pass, char *blynk_auth_token, bool use_timer_interrupt) {
     ESP8266_Init();
     ESP8266_Reset();
-    ESP8266_SetupWiFi();
+    ESP8266_Connect(wifi_ssid, wifi_pass, blynk_auth_token);
 
     if (use_timer_interrupt) {
         /* Check for data from the Blynk app every 10 ms. */

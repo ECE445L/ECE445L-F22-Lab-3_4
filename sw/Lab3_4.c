@@ -1,40 +1,27 @@
 /**
  * @file Lab3_4.c
- * @author your name (you@domain.com), Jonathan Valvano, Matthew Yu
+ * @author your name (you@domain.com), Jonathan Valvano, Matthew Yu (matthewjkyu@gmail.com)
  *    <TA NAME and LAB SECTION # HERE>
  * @brief
- *    An empty main file for running lab3.
+ *    A default main file for running lab3 and 4.
  *    Feel free to edit this to match your specifications.
  *
- *    For this lab, the student must implement an alarm clock. This assignment
- *    is open ended, so students must architect the features of this alarm clock
- *    (besides some base features), design drivers for peripherals used by the
- *    clock (ST7735 drawing routines, switch debounce drivers, and so forth),
- *    and integrate it all together to have a functioning device.
- *    Good luck!
+ *    For these two labs, the student must implement an alarm clock with various 
+ *    functions (lab 3) and then integrate it with a remote server, Blynk (lab 4). 
+ *    This assignment is open ended, so students must plan the features of their 
+ *    alarm clock (besides some base required features), design drivers for peripherals 
+ *    used by the clock (ST7735 drawing routines, switch debounce drivers, and so forth), 
+ *    and integrate it all together to have a functioning device. Good luck!
  * 
- * @version 0.1
- * @date 2022-02-6 <REPLACE WITH DATE OF LAST REVISION>
+ * @version 0.2
+ * @date 2022-09-12 <REPLACE WITH DATE OF LAST REVISION>
  *
  * @copyright Copyright (c) 2022
- * @note Potential Pinouts:
- *    Backlight (pin 10) connected to +3.3 V
- *    MISO (pin 9) unconnected
- *    SCK (pin 8) connected to PA2 (SSI0Clk)
- *    MOSI (pin 7) connected to PA5 (SSI0Tx)
- *    TFT_CS (pin 6) connected to PA3 (SSI0Fss)
- *    CARD_CS (pin 5) unconnected
- *    Data/Command (pin 4) connected to PA6 (GPIO)
- *    RESET (pin 3) connected to PA7 (GPIO)
- *    VCC (pin 2) connected to +3.3 V
- *    Gnd (pin 1) connected to ground
- * 
- *    Center of 10k-ohm potentiometer connected to PE2/AIN1
- *    Bottom of 10k-ohm potentiometer connected to ground
- *    Top of 10k-ohm potentiometer connected to +3.3V 
- *
- *    Warning. Initial code for the RGB driver creates bright flashing lights. Remove this code
- *    and do not run if you have epilepsy.
+ * @note 
+ *    We suggest following the pinouts provided by the 
+ *    EE445L_Baseline_Schematic_Guide.pdf, found in the resources folder.
+ *    Warning. Initial code for the RGB driver creates bright flashing lights. 
+ *    Please remove this code and do not run if you have epilepsy.
  */
 
 /* This example accompanies the book
@@ -60,27 +47,22 @@
 
 /* Register definitions. */
 #include "./inc/tm4c123gh6pm.h"
+/* Clocking. */
+#include "./inc/PLL.h"
 /* Clock delay and interrupt control. */
 #include "./inc/CortexM.h"
-/* External debug monitor stuff. */
-#include "./inc/TExaS.h"
-
-/* ADC control. */
-#include "./inc/ADCSWTrigger.h"
-/* Timers. */
-#include "./inc/Timer0A.h"
-#include "./inc/Timer1A.h"
-#include "./inc/Timer2A.h"
-#include "./inc/Timer3A.h"
-#include "./inc/Timer4A.h"
+/* Initialization of all the pins. */
+#include "./inc/Unified_Port_Init.h"
+/* Talking to PC via UART. */
+#include "./inc/UART.h"
+/* Talking to Blynk via the ESP8266. */
+#include "./inc/Blynk.h"
 /* ST7735 display. */
 #include "./inc/ST7735.h"
 /* Add whatever else you need here! */
 #include "./lib/RGB/RGB.h"
 
-#include "./inc/Unified_Port_Init.h"
-
-#include "./inc/Blynk.h"
+/* TODO: We suggest using the ./inc/ADCSWTrigger.h and the ./inc/TimerXA.h headers. */
 
 
 /** MMAP Pin definitions. */
@@ -104,49 +86,65 @@ void DelayWait10ms(uint32_t n);
  */
 void Pause(void);
 
-/** Main functions */
+/** Entry point. */
 int main(void) {
     DisableInterrupts();
 
-    /* TExaS Debug modes:
-       SCOPE,           // PD3
-       LOGICANALYZER,   // ???
-       SCOPE_PD2,       // PD2
-       SCOPE_PE2,       // PE3
-       SCOPE_PB5        // PB5
-     */
+	  /* Interrupts currently being used:
+	     Timer0A, pri7 - RGB flashing
+			 Timer2A, pri4 - ESP8266 sampling
+			 UART0, pri7 - PC communication
+			 UART5 (lab4), pri2 - ESP8266 communication
+	  */
+	
+    /* PLL Init. */
+		PLL_Init(Bus80MHz);
 
-    // PLL Init
-    // UART debug init (115200baud)
-    TExaS_Init(SCOPE);
-    // Stop capture for now.
-    TExaS_Stop();
-    // Note: Call TExaS_Start to restart sampling.
-
-    // Start up display.
+		/* Allow us to talk to the PC via PuTTy! Check device manager to see which
+	     COM serial port we are on. The baud rate is 115200 chars/s. */
+		UART_Init(7);
+	
+    /* Start up display. */
     ST7735_InitR(INITR_REDTAB);
 
-    // Initialize all ports.
+    /* Initialize all ports. */
     Unified_Port_Init();
     
-    // WARNING! BRIGHT FLASHING COLORS. DO NOT RUN IF YOU HAVE EPILEPSY.
-    RGBInit();
-    // Note: Call RGBStop and RGBStart to halt or restart the RGB.
+    /* Start RGB flashing. WARNING! BRIGHT FLASHING COLORS. DO NOT RUN IF YOU HAVE EPILEPSY. */
+		RGBInit();
 
+		/* Allows any enabled timers to begin running. */
     EnableInterrupts();
 
-    // Output to ST7735
+    /* Print starting message to the PC and the ST7735. */
     ST7735_FillScreen(ST7735_BLACK);
-    ST7735_SetCursor(0,0);
-    ST7735_OutString("EE445L Lab 4D\nBlynk example\n");
-    ST7735_SetCursor(1,0);
-    ST7735_OutString("Press SW1 to start ESP8266 connection.\n");
+    ST7735_SetCursor(0, 0);
+    ST7735_OutString(
+			"ECE445L Lab 3 & 4.\n"
+			"Press SW1 to start.\n");
+    UART_OutString(
+			"ECE445L Lab 3 & 4.\r\n"
+			"Press SW1 to start.\r\n");
     Pause();
+		
+		/* Stop RGB and turn off any on LEDs. */
+		RGBStop();
+		PF1 = 0;
+		PF2 = 0;
+		PF3 = 0;
+		
+		/* Reset screen. */
+    ST7735_FillScreen(ST7735_BLACK);
+    ST7735_SetCursor(0, 0);
+		ST7735_OutString("Starting...\n");
+    UART_OutString("Starting...\r\n");
 
-    // Setup ESP8266 to talk to Blynk server
+    /* Setup ESP8266 to talk to Blynk server. See blynk.h for what each field does. */
     // TODO: enable this for lab 4
-    blynk_init(true);
-
+		// #define USE_TIMER_INTERRUPT true
+    // blynk_init("EE-IOT-Platform-03", "g!TyA>hR2JTy", "1234567890", USE_TIMER_INTERRUPT);
+		// #undef USE_TIMER_INTERRUPT
+		
     while (1) {
         /* TODO: Write your code here! */
         WaitForInterrupt();

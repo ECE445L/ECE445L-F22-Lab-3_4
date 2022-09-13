@@ -1,12 +1,13 @@
 // -------------------------------------------------------------------
-// File name:     esp8266.c
+// File name:     esp8266_blynk.c
 // Description:   This starter code is used to bridge the TM4C123 board
 //                and the Blynk Application via the ESP8266. 
 //
 // Authors:       Mark McDermott
 // Converted to EE445L style Jonathan Valvano
+// Modified by Matthew Yu
 // Date:          May 21, 2018
-// Last update: Sept 20, 2018
+// Last update: Sept 12, 2022
 //
 // TM4C123       ESP8266-ESP01 (2 by 4 header)
 // PE5 (U5TX) to Pin 1 (Rx)
@@ -23,15 +24,12 @@
 // http://www.ti.com/lit/ds/symlink/lm2937-3.3.pdf
 #include <stdint.h>
 #include <string.h>
+#include <stdio.h>
+
 #include "inc/tm4c123gh6pm.h"
 #include "inc/UART.h"
 #include "inc/ST7735.h"
 #include "esp8266_blynk.h"
-// the following two lines connect you to the internet
-char    ssid[32]        = "EE-IOT-Platform-03";
-char    pass[32]        = "g!TyA>hR2JTy";
-// create your own Blynk server app and edit this next line with your authentication code
-char    auth[64]        = "1234567890";
 
 #define UART_FR_RXFF            0x00000040  // UART Receive FIFO Full
 #define UART_FR_TXFF            0x00000020  // UART Transmit FIFO Full
@@ -74,15 +72,17 @@ uint32_t volatile Rx5PutJ; // put next character 0 to MESSAGESIZE-1
 uint32_t volatile Rx5GetI; // get next message
 char Rx5Fifo[RX5FIFOSIZE][MESSAGESIZE]; // each message can have up to MESSAGESIZE-1 characters
 char RxMessage[MESSAGESIZE];
+
 // initialize index FIFO
-void Rx5Fifo_Init(void){ long sr;
+static void Rx5Fifo_Init(void){ long sr;
   sr = StartCritical(); // make atomic
   Rx5PutI = Rx5GetI = Rx5PutJ = 0;  // Empty
   EndCritical(sr);
 }
+
 // add element to end of index FIFO
 // return TXFIFOSUCCESS if successful
-int Rx5Fifo_Put(char data){
+static int Rx5Fifo_Put(char data){
   if((Rx5PutI-Rx5GetI) & ~(RX5FIFOSIZE-1)){
     return(FIFOFAIL); // Failed, fifo full
   }
@@ -105,46 +105,30 @@ int Rx5Fifo_Put(char data){
   Rx5PutJ = 0; // get ready for new message
   return(FIFOSUCCESS);
 }
-// remove a message from front of index FIFO
-// datapt points to an empty data buffer of MESSAGESIZE character
-// if successful a message is copied from the FIFO into data buffer
-// return FIFOSUCCESS if successful
-// return FIFOFAIL if the FIFO is empty (no messages)
-int ESP8266_GetMessage(char *datapt){char data; int j;
-  if(Rx5PutI == Rx5GetI ){
-    return(FIFOFAIL); // Empty if PutI=GetI
-  }
-  j = 0;
-  do{
-    data = Rx5Fifo[Rx5GetI&(RX5FIFOSIZE-1)][j];
-    datapt[j] = data;
-    j++;
-  }while((j<MESSAGESIZE)&&(data != '\n'));
-  Rx5GetI++;  // Success, update
-  return(FIFOSUCCESS);
-}
+
 // number of messages in index FIFO
 // 0 to RX5FIFOSIZE-1
-uint32_t Rx5Fifo_Size(void){
+static uint32_t Rx5Fifo_Size(void){
  return ((uint32_t)(Rx5PutI-Rx5GetI));
 }  
 
 // Two-index implementation of the transmit FIFO
 // can hold 0 to TX5FIFOSIZE elements
 #define TX5FIFOSIZE 256    // must be a power of 2
-uint32_t volatile Tx5PutI; // put next
-uint32_t volatile Tx5GetI; // get next
-char static Tx5Fifo[TX5FIFOSIZE];
+static uint32_t volatile Tx5PutI; // put next
+static uint32_t volatile Tx5GetI; // get next
+static char Tx5Fifo[TX5FIFOSIZE];
 
 // initialize index FIFO
-void Tx5Fifo_Init(void){ long sr;
+static void Tx5Fifo_Init(void){ long sr;
   sr = StartCritical(); // make atomic
   Tx5PutI = Tx5GetI = 0;  // Empty
   EndCritical(sr);
 }
+
 // add element to end of index FIFO
 // return TXFIFOSUCCESS if successful
-int Tx5Fifo_Put(char data){
+static int Tx5Fifo_Put(char data){
   if((Tx5PutI-Tx5GetI) & ~(TX5FIFOSIZE-1)){
     return(FIFOFAIL); // Failed, fifo full
   }
@@ -152,9 +136,10 @@ int Tx5Fifo_Put(char data){
   Tx5PutI++;  // Success, update
   return(FIFOSUCCESS);
 }
+
 // remove element from front of index FIFO
 // return TXFIFOSUCCESS if successful
-int Tx5Fifo_Get(char *datapt){
+static int Tx5Fifo_Get(char *datapt){
   if(Tx5PutI == Tx5GetI ){
     return(FIFOFAIL); // Empty if TxPutI=TxGetI
   }
@@ -162,9 +147,10 @@ int Tx5Fifo_Get(char *datapt){
   Tx5GetI++;  // Success, update
   return(FIFOSUCCESS);
 }
+
 // number of elements in index FIFO
 // 0 to TX5FIFOSIZE-1
-unsigned long Tx5Fifo_Size(void){
+static unsigned long Tx5Fifo_Size(void){
  return ((unsigned long)(Tx5PutI-Tx5GetI));
 }
 
@@ -175,7 +161,7 @@ unsigned long Tx5Fifo_Size(void){
 // inputs: ibrd,fbrd
 //         priority 0 to 5 allowed
 // outputs: none
-void UART5_Init(uint32_t priority){
+static void UART5_Init(uint32_t priority){
   if(priority>7){
     priority = 7;
   } 
@@ -209,16 +195,17 @@ void UART5_Init(uint32_t priority){
 
 // copy from hardware RX FIFO to software RX FIFO
 // stop when hardware RX FIFO is empty or software RX FIFO is full
-void static copyHardwareToSoftware5(void){
+static void copyHardwareToSoftware5(void){
   char letter;
   while(((UART5_FR_R&UART_FR_RXFE) == 0) && (Rx5Fifo_Size() < (RX5FIFOSIZE - 1))){
     letter = UART5_DR_R;
     Rx5Fifo_Put(letter);
   }
 }
+
 // copy from software TX FIFO to hardware TX FIFO
 // stop when software TX FIFO is empty or hardware TX FIFO is full
-void static copySoftwareToHardware5(void){
+static void copySoftwareToHardware5(void){
   char letter;
   while(((UART5_FR_R&UART_FR_TXFF) == 0) && (Tx5Fifo_Size() > 0)){
     Tx5Fifo_Get(&letter);
@@ -226,19 +213,6 @@ void static copySoftwareToHardware5(void){
   }
 }
 
-// Are there any received messages to be input?
-// return the number of characters available to be read
-uint32_t ESP8266_AvailableInput(void){
-  return Rx5Fifo_Size();
-}
-// output ASCII character to UART
-// spin if TxFifo is full
-void ESP8266_OutChar(char data){
-  while(Tx5Fifo_Put(data) == FIFOFAIL){};
-  UART5_IM_R &= ~UART_IM_TXIM;          // disable TX FIFO interrupt
-  copySoftwareToHardware5();
-  UART5_IM_R |= UART_IM_TXIM;           // enable TX FIFO interrupt
-}
 // at least one of three things has happened:
 // hardware TX FIFO goes from 3 to 2 or less items
 // hardware RX FIFO goes from 1 to 2 or more items
@@ -264,38 +238,7 @@ void UART5_Handler(void){
   }
 }
 
-//------------ESP8266_OutString------------
-// Output String (NULL termination)
-// Input: pointer to a NULL-terminated string to be transferred
-// Output: none
-void ESP8266_OutString(char *pt){
-  while(*pt){
-    ESP8266_OutChar(*pt);
-    pt++;
-  }
-}
-
-//-----------------------ESP8266_OutUDec-----------------------
-// Output a 32-bit number in unsigned decimal format
-// Input: 32-bit number to be transferred
-// Output: none
-// Variable format 1-10 digits with no space before or after
-void ESP8266_OutUDec(uint32_t n){
-// This function uses recursion to convert decimal number
-//   of unspecified length as an ASCII string
-  if(n >= 10){
-    ESP8266_OutUDec(n/10);
-    n = n%10;
-  }
-  ESP8266_OutChar(n+'0'); /* n is between 0 and 9 */
-}
-
-
-// DelayMs
-//  - busy wait n milliseconds
-// Input: time to wait in msec
-// Outputs: none
-void DelayMs(uint32_t n){
+static void DelayMs(uint32_t n){
   volatile uint32_t time;
   while(n){
     time = 6665;  // 1msec, tuned at 80 MHz
@@ -304,6 +247,30 @@ void DelayMs(uint32_t n){
     }
     n--;
   }
+}
+
+void ESP8266_OutChar(char data){
+  while(Tx5Fifo_Put(data) == FIFOFAIL){};
+  UART5_IM_R &= ~UART_IM_TXIM;          // disable TX FIFO interrupt
+  copySoftwareToHardware5();
+  UART5_IM_R |= UART_IM_TXIM;           // enable TX FIFO interrupt
+}
+
+void ESP8266_OutString(char *pt){
+  while(*pt){
+    ESP8266_OutChar(*pt);
+    pt++;
+  }
+}
+
+void ESP8266_OutInteger(uint32_t n){
+  // This function uses recursion to convert decimal number
+  //   of unspecified length as an ASCII string
+  if(n >= 10){
+    ESP8266_OutInteger(n/10);
+    n = n%10;
+  }
+  ESP8266_OutChar(n + '0'); /* n is between 0 and 9 */
 }
 
 #define PE0       (*((volatile uint32_t *)0x40024004))    // RDY from ESP 8266
@@ -316,118 +283,160 @@ void DelayMs(uint32_t n){
 #define RST1  0x02
 #define LOW   0x00
 
-#define BIT0  0x01
-#define BIT1  0x02
-#define BIT2  0x04
-#define BIT3  0x08   
-
-// Initialize PE5,4,3,1,0 for interface to ESP8266
-// Uses interrupt driven UART5 on PE5,4
-// Uses simple GPIO output on PE3,1,0
 void ESP8266_Init(void){
   SYSCTL_RCGCGPIO_R |= 0x10; // activate port E
-  while((SYSCTL_PRGPIO_R&0x10)==0){};
-  GPIO_PORTE_DIR_R |= 0x0A;       // output digital I/O on PE3,1
+  while ((SYSCTL_PRGPIO_R & 0x10) == 0);
+  GPIO_PORTE_DIR_R |= 0x02;       // output digital I/O on PE3,1
   GPIO_PORTE_DIR_R &= ~0x01;      // input digital I/O on PE0
-  GPIO_PORTE_AFSEL_R &= ~0x0B;    // disable alt funct on PE3,1,0
-  GPIO_PORTE_DEN_R |= 0x0B;       // enable digital I/O on PE3,1,0
-  GPIO_PORTE_PCTL_R = (GPIO_PORTE_PCTL_R&0xFFFF0F00);
-  GPIO_PORTE_AMSEL_R &= ~0x0B;    // disable analog functionality on PE3,1,0
+  GPIO_PORTE_AFSEL_R &= ~0x03;    // disable alt funct on PE3,1,0
+  GPIO_PORTE_DEN_R |= 0x03;       // enable digital I/O on PE3,1,0
+  GPIO_PORTE_PCTL_R = (GPIO_PORTE_PCTL_R&0xFFFFFF00);
+  GPIO_PORTE_AMSEL_R &= ~0x03;    // disable analog functionality on PE3,1,0
   UART5_Init(2);                  // Enable ESP8266 Serial Port 
-  EnableInterrupts();
-}
-// Initialize ESP8266 interface and reset the
-void ESP8266_Reset(void) {
-#ifdef DEBUG1
-  UART_OutString("In Reset_8266 routine\r\n");
-  UART_OutString("Reset pin being held low for 5 sec\r\n");
-#endif
-  RST = LOW;      // Reset the 8266
-  DelayMs(5000);  // Wait for 8266 to reset
-  RST = RST1;     // Enable the 8266
-#ifdef DEBUG1
-  UART_OutString("Reset pin is now high for 5 sec\r\n");
-  UART_OutString("Waiting for ESP to finish initializing\r\n");
-#endif
-  DelayMs(5000);  // Wait before setting up 8266
-#ifdef DEBUG1
-  UART_OutString("Leaving Reset_8266 routine\r\n");
-#endif
-  PE3 = LOW;             // Turn off 
 }
 
-// ----------------------------------------------------------------------
-// This routine sets up the Wifi connection between the TM4C and the
-// hotspot. Enable the DEBUG flags in esp8266.h if you want to watch the transactions.
-void ESP8266_SetupWiFi(void) { 
-#ifdef DEBUG1
-  UART_OutString("\r\nIn WiFI_Setup routine\r\n");
-  UART_OutString("Waiting for RDY flag from ESP\r\n");
+void ESP8266_Reset(void) {
+#ifdef __DEBUG_UART__
+  UART_OutString(
+		"Resetting ESP8266.\r\n"
+		"Reset pin held low for 5 seconds.\r\n");
 #endif
-  
-#ifdef DEBUG3
-  Output_Color(ST7735_YELLOW);
-  ST7735_OutString("In WiFI_Setup routine\n");
-  ST7735_OutString("Waiting for RDY flag\n");
-#endif 
-  while (!RDY) {      // Wait for ESP8266 indicate it is ready for programming data
-#ifdef DEBUG1
+#ifdef __DEBUG_ST7735__
+  ST7735_OutString(
+		"Resetting ESP8266.\r"
+		"Reset pin low 5s.\r");
+#endif
+	
+  RST = LOW;      // Reset the 8266
+  DelayMs(5000);  // Wait for 8266 to reset
+	
+#ifdef __DEBUG_UART__
+  UART_OutString("Reset pin held high for 5 seconds.\r\n");
+#endif
+#ifdef __DEBUG_ST7735__
+  ST7735_OutString("Reset pin high 5s.\r");
+#endif
+
+  RST = RST1;     // Enable the 8266
+  DelayMs(5000);  // Wait before setting up 8266
+	
+#ifdef __DEBUG_UART__
+  UART_OutString("ESP8266 Reset.\r\n");
+#endif
+#ifdef __DEBUG_ST7735__
+  ST7735_OutString("ESP8266 Reset.\r");
+#endif
+}
+
+void ESP8266_Connect(char *wifi_ssid, char *wifi_pass, char *blynk_auth_token) { 
+#ifdef __DEBUG_UART__
+  UART_OutString(
+		"Setting up Wifi.\r\n"
+		"Waiting for RDY to pull high from the ESP8266.\r\n");
+#endif
+#ifdef __DEBUG_ST7735__
+  ST7735_OutString(
+		"Setting up Wifi.\n"
+		"Waiting for RDY high.\n");
+#endif
+
+	// Wait for ESP8266 indicate it is ready for programming data
+  while (!RDY) {      
+#ifdef __DEBUG_UART__
     UART_OutString(".");
 #endif
     DelayMs(1000);
   }
-  ESP8266_OutString(auth);    // Send authorization code
+	
+  ESP8266_OutString(blynk_auth_token);    // Send authorization code
   ESP8266_OutChar(',');
-  ESP8266_OutString(ssid);
+  ESP8266_OutString(wifi_ssid);
   ESP8266_OutChar(',');
-  ESP8266_OutString(pass); 
+  ESP8266_OutString(wifi_pass); 
   ESP8266_OutChar(',');       // Extra comma needed for 8266 parser code
   ESP8266_OutChar('\n');      // Send NL to indicate EOT   
 
-#ifdef DEBUG1
-  UART_OutString(auth);    
-  UART_OutChar(',');
-  UART_OutString(ssid);
-  UART_OutChar(',');
-  UART_OutString(pass);
-  UART_OutString(",\n\r");            
+#if defined(__DEBUG_UART__) || defined(__DEBUG_ST7735__)
+	#define OUTPUT_STRING_SIZE 100
+	char output_string[OUTPUT_STRING_SIZE] = { '\0' };
 #endif
-#ifdef DEBUG3
-  Output_Color(ST7735_WHITE);
-  ST7735_OutString(ssid); ST7735_OutChar('\n');
-  ST7735_OutString(pass); ST7735_OutChar('\n');
-  ST7735_OutString(auth); ST7735_OutChar('\n');
+#ifdef __DEBUG_UART__
+	snprintf(
+		output_string, 
+		OUTPUT_STRING_SIZE, 
+		"SSID: %s\r\nPASS: %s\r\nBlynk auth code: %s\r\n",
+		wifi_ssid,
+		wifi_pass,
+		blynk_auth_token);
+	UART_OutString(output_string);
 #endif
-
+#ifdef __DEBUG_ST7735__
+	snprintf(
+		output_string, 
+		OUTPUT_STRING_SIZE, 
+		"SSID: %s\nPASS: %s\nBlynk auth code:\n  %s\n",
+		wifi_ssid,
+		wifi_pass,
+		blynk_auth_token);
+	ST7735_OutString(output_string);
+#endif
+	
   //
   // This while loop receives debug info from the 8266 and optionally 
   // sends it out the debug port. The loop exits once the RDY signal
   // is deasserted and the serial port has no more character to xmit
   // 
-#ifdef DEBUG1
-  UART_OutString("\n\rWaiting for RDY to go low\n\r");
-#endif 
-  while(RDY){   // pause while RDY=1
-#ifdef DEBUG1
+#ifdef __DEBUG_UART__
+  UART_OutString(
+		"Waiting for debug info.\r\n"
+		"Waiting for RDY to pull low from the ESP.\r\n");
+#endif
+#ifdef __DEBUG_ST7735__
+  ST7735_OutString(
+		"Wait for debug info.\n"
+		"Wait for RDY low.\n");
+#endif
+
+	// Wait for ESP8266 indicate it is ready for programming data
+  while (RDY) {      
+#ifdef __DEBUG_UART__
     UART_OutString(".");
 #endif
-    DelayMs(500);
+    DelayMs(1000);
   }
-  while(ESP8266_GetMessage(RxMessage)){
-  }
-#ifdef DEBUG1
-  UART_OutString("\n\rRDY went low\n\r");
-#endif 
-  Rx5Fifo_Init(); // flush buffer
 
-#ifdef DEBUG3
-  Output_Color(ST7735_YELLOW);
-  ST7735_OutString("Exiting WiFI_Setup\nReady to talk\n");
-#endif     
-#ifdef DEBUG1
-  UART_OutString("Exiting TM4C WiFI_Setup routine\r\nReady to talk\r\n");
+  while(ESP8266_GetMessage(RxMessage));
+	
+	// flush buffer
+  Rx5Fifo_Init(); 
+
+#ifdef __DEBUG_UART__
+  UART_OutString(
+		"Finished setting up Wifi.\r\n"
+		"Ready to talk to Blynk server.\r\n");
 #endif
-  PE3 = BIT3;
+#ifdef __DEBUG_ST7735__
+  ST7735_OutString(
+		"Wifi set up.\n"
+		"Ready to talk!\n");
+#endif
+
+  PE3 = 0x08;
 }
 
+int ESP8266_GetMessage(char *datapt){
+  char data;
+  int j;
+  if (Rx5PutI == Rx5GetI ) {
+    return(FIFOFAIL); // Empty if PutI=GetI
+  }
+  j = 0;
+  do {
+    data = Rx5Fifo[Rx5GetI&(RX5FIFOSIZE-1)][j];
+    datapt[j] = data;
+    j++;
+  } while ((j<MESSAGESIZE)&&(data != '\n'));
+  Rx5GetI++;  // Success, update
 
+  return FIFOSUCCESS;
+}
