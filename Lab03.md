@@ -10,11 +10,12 @@
     - [0.4 Git and Github](#04-git-and-github)
   - [1 Summary](#1-summary)
     - [1.1 Goal](#11-goal)
-    - [1.2 Team Size:](#12-team-size)
-    - [1.3 Background](#13-background)
-    - [1.4 Required Hardware (ECE445L students purchase these parts for themselves)](#14-required-hardware-ece445l-students-purchase-these-parts-for-themselves)
-    - [1.5 Required Parts (available in ECE checkout desk)](#15-required-parts-available-in-ece-checkout-desk)
-    - [1.6 Requirements document](#16-requirements-document)
+    - [1.2 Review](#12-review)
+    - [1.3 Team Size:](#12-team-size)
+    - [1.4 Background](#13-background)
+    - [1.5 Required Hardware (ECE445L students purchase these parts for themselves)](#14-required-hardware-ece445l-students-purchase-these-parts-for-themselves)
+    - [1.6 Required Parts (available in ECE checkout desk)](#15-required-parts-available-in-ece-checkout-desk)
+    - [1.7 Requirements document](#16-requirements-document)
   - [2 Preparation](#2-preparation)
   - [3 Procedure](#3-procedure)
     - [3.1 Build Circuit](#31-build-circuit)
@@ -26,7 +27,6 @@
       - [Deliverable 3a (real oscilloscope)](#deliverable-3a-real-oscilloscope)
       - [Deliverable 3b (TExaS oscilloscope)](#deliverable-3b-texas-oscilloscope)
     - [3.4 Measure Current Draw](#34-measure-current-draw)
-- [TODO add voltage supply to measure current](#todo-add-voltage-supply-to-measure-current)
       - [Deliverable 4](#deliverable-4)
   - [4 Checkout](#4-checkout)
   - [5 Lab Report](#5-lab-report)
@@ -72,21 +72,28 @@ A gitignore file is added to the root of this repo that may prevent specific fil
 ### 1.1 Goal
 Labs in ECE445L are extremely open ended. For Labs 3, 4 and 5 you will be given a [requirements document](Requirements%20Document.docx). Your TA is your client or customer. A grade of B can be achieved by satisfying the minimum specifications listed by the document. To achieve higher grades, you are expected to expand sections 2.1 and 2.5 describing what your system will do. You are free to make any changes to this document as long you achieve the educational goals for the lab. All changes must be approved by your TA. Excellent grades are reserved for systems with extra features and are easy to operate. You will need your LaunchPad and color LCD. From checkout you can borrow speaker, switches, IRLD024 or IRLD120 MOSFET, 1N914, and some resistors for this lab. 
 
-### 1.2 Team Size:
+### 1.2 Review
+* Valvano Section 3.4 on developing modular software
+* Valvano Chapter 4 on Basic Handshake Mechanisms, 
+* Valvano Sections 4.5 and 4.10 on edge-triggered interrupts and the keypad
+* Valvano Section 5.7 on periodic interrupts 
+
+
+### 1.3 Team Size:
 The team size for this lab is 2.
 
 > Two shall be the number thou shalt count, and the number of the counting shall be two. Three shalt thou not count, neither count thou one, excepting that thou then proceed to two. Four is right out.
 
-### 1.3 Background
+### 1.4 Background
 Labs in EE445L are extremely open ended. For Labs 3, 4 and 5 you will be given a requirements document. Your TA is your client or customer. A grade of B can be achieved by satisfying these minimum specifications. To achieve higher grades, you are expected to expand sections 2.1 and 2.5 describing what your system will do. You are free to make any changes to this document as long you achieve the educational goals for the lab. All changes must be approved by your TA. Excellent grades are reserved for systems with extra features and are easy to operate. You will need your LaunchPad and color LCD. From checkout you can borrow speaker, switches, IRLD024 or IRLD120 MOSFET, 1N914, and some resistors for this lab.
 
-### 1.4 Required Hardware (ECE445L students purchase these parts for themselves)
+### 1.5 Required Hardware (ECE445L students purchase these parts for themselves)
 | Part                          | Website                                                                       | Price     |
 | ----------------------------- | ----------------------------------------------------------------------------- | --------- |
 | EK-TM4C123GXL                 | [http://www.ti.com](http://www.ti.com)                                        | $12.99    |
 | Sitronix ST7735R Color LCD    | [http://www.adafruit.com/products/358](http://www.adafruit.com/products/358)  | $12.99    |
 
-### 1.5 Required Parts (available in ECE checkout desk)
+### 1.6 Required Parts (available in ECE checkout desk)
 | Part                  | www.mouser.com    | www.element14.com | www.digikey.com   | Price |
 | --------------------- | ----------------- | ----------------- | ----------------- | ----- |
 | IRLD120 MOSFET        | 844-IRLD120PBF    | 19K8369           | IRLD120PBF-ND     | $1.07 |
@@ -99,63 +106,8 @@ Any 8 to 32 ohm speaker will suffice, search speaker at
 * [https://www.digikey.com](https://www.digikey.com)
 * [https://www.element14.com](https://www.element14.com)
 
-### 1.6 Requirements document
-1. Overview
-    1. Objectives: Why are we doing this project? What is the purpose? 
-        * The objectives of this project are to design, build and test an alarm clock. Educationally, students are learning how to design and test modular software and how to perform switch/keypad input in the background.
-    
-    2. Process: How will the project be developed? 
-        * The project will be developed using the TM4C123 board. There will be switches or a keypad. The system will be built on a solderless breadboard and run on the usual USB power. The system may use the on board switches and/or the on board LEDs. Alternatively, the system may include external switches. The speaker will be external. There will be at least four hardware/software modules: switch/keypad input, time management, LCD graphics, and sound output. The process will be to design and test each module independently from the other modules. After each module is tested, the system will be built and tested.
-    
-    3. Roles and Responsibilities: Who will do what?  Who are the clients?
-        * EE445L students are the engineers and the TA is the client. Students are expected to modify this document to clarify exactly what they plan to build. Students are allowed to divide responsibilities of the project however they wish, but, at the time of demonstration, both students are expected to understand all aspects of the design.
-    
-    4. Interactions with Existing Systems: How will it fit in?
-        * The system will use the TM4C123 board, a ST7735 color LCD, a solderless breadboard, and be powered using the USB cable.
-    
-    5. Terminology: Define terms used in the document.
-        * Power budget, device driver, critical section, latency, time jitter, and modular programming. See textbook for definitions.
-
-    6. Security: How will intellectual property be managed?
-        * The system may include software from Tivaware and from the book. No software written for this project may be transmitted, viewed, or communicated with any other EE445L student past, present, or future (other than the lab partner of course). It is the responsibility of the team to keep its EE445L lab solutions secure.
-
-2. Function Description
-    1. Functionality: What will the system do precisely?
-        * The clock must be able to perform five functions. 1) It will display hours and minutes in both graphical and numeric forms on the LCD. The graphical output will include the 12 numbers around a circle, the hour hand, and the minute hand. The numerical output will be easy to read. 2) It will allow the operator to set the current time using switches or a keypad. 3) It will allow the operator to set the alarm time including enabling/disabling alarms. 4) It will make a sound at the alarm time. 5) It will allow the operator to stop the sound. An LED heartbeat will show when the system is running.
-
-    2. Scope: List the phases and what will be delivered in each phase.
-        * Phase 1 is the preparation; phase 2 is the demonstration; and phase 3 is the lab report. Details can be found in the lab manual.
-
-    3. Prototypes: How will intermediate progress be demonstrated?
-        * A prototype system running on the TM4C123 board, ST7735 color LCD, and solderless breadboard will be demonstrated. Progress will be judged by the preparation, demonstration, and lab report.
-
-    4. Performance: Define the measures and describe how they will be determined.
-        * The system will be judged by three qualitative measures. First, the software modules must be easy to understand and well-organized. Second, the clock display should be beautiful and effective in telling time. Third, the operation of setting the time and alarm should be simple and intuitive. The system should not have critical sections. All shared global variables must be identified with documentation that a critical section does not exist. Backward jumps in the ISR should be avoided if possible. The interrupt service routine used to maintain time must complete in as short a time as possible. This means all LCD I/O occurs in the main program. The average current on the +3.3V power will be measured with and without the alarm sounding. 
-
-    5. Usability: Describe the interfaces. Be quantitative if possible.
-        * Minimum requirements:
-            1. There will be two switch inputs from PF0, PF4 (you can add additional external switches as well). In the main menu, the switches can be used to activate:
-                1. set time
-                2. set alarm
-                3. turn on/off alarm
-                4. display mode
-            2. The user should be able to set the time (hours, minutes) and be able to set the alarm (hour, minute). Exactly how the user interface works is up to you. After some amount of inactivity the system reverts to the main menu. The user should be able to control some aspects of the display configuring the look and feel of the device. The switches MUST be debounced, so only one action occurs when the operator touches a switch once.
-            3. The LCD display shows the time using graphical display typical of a standard on the wall clock. The 12 numbers, the minute hand, and the hour hand are large and easy to see. The clock must also display the time in numeric mode using numbers.
-            4. The alarm sound can be a simple square wave. The sound amplitude will be just loud enough for the TA to hear when within 3 feet. 90% will be the maximum score for meeting all minimum requirements.
-        * *To get full credit you must add two or more cool features in addition to the minimum requirements. Propose the features in preparation and TAs will determine how many points it is worth.*
-
-    6. Safety: Explain any safety requirements and how they will be measured.
-	    The alarm sound will be VERY quiet in order to respect other people in the room during testing. Connecting or disconnecting wires on the protoboard while power is applied may damage the board. 
-
-3. Deliverables
-    1. Reports: How will the system be described?
-        A lab report described below is due by the due date listed in the syllabus. This report includes the final requirements document.
-
-    2. Audits: How will the clients evaluate progress?
-        The preparation is due at the beginning of the lab period on the date listed in the syllabus.
-
-    3. Outcomes: What are the deliverables? How do we know when it is done?
-        There are three deliverables: preparation, demonstration, and report.
+### 1.7 Requirements document
+[Requirements Document.docx](Requirements%20Document.docx)
 
 ---
 
