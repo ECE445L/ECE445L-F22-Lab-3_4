@@ -42,13 +42,33 @@ A gitignore file is added to the root of this repo that may prevent specific fil
 
 ## 1 Summary
 
-### 1.1 Background
+### 1.1 Goals
+* Implement a “smart object” that connects to a phone application (Blynk) via a cloud based server using the ESP8266 WiFi module connected to the TM4C123. (Fig 4.1)
+* Remotely control the alarm clock developed in Lab 3 via the “Blynk Virtual Pin” interface.
+* Replace the manual switches from Lab 3 with Virtual Pin (VP) Switches.
+* Remotely read the Hour/Minutes/Seconds via the “Blynk Virtual Pin” interface. Display the data on the Blynk App.
+* Extra Credit: Remotely read any sensor and via the “Blynk Virtual Pin” interface. Display the data on the Blynk App. Reading a sensor and displaying its value is an extra credit component.
+
+![Figure 4.1](resources/lab4/images/figure_4.1.png)
+
+### 1.2 Team Size
+The team size for this lab is 2.
+
+> Two shall be the number thou shalt count, and the number of the counting shall be two. Three shalt thou not count, neither count thou one, excepting that thou then proceed to two. Four is right out.
+
+### 1.3 Review
+* Valvano Section 11.4 on internet of things and this web page: [Internet Of Things](http://users.ece.utexas.edu/~valvano/Volume1/E-Book/C16_InternetOfThings.htm)
+* [Getting started with the Blynk Application](https://blynk.io/en/getting-started)
+* [Programming environment for the ESP8266](http://users.ece.utexas.edu/~valvano/EE445L/SetupESP8266ProgrammingEnvironment.htm)
+* [Arduino programming](https://playground.arduino.cc/uploads/Main/arduino_notebook_v1-1.pdf)
+
+### 1.4 Background
 **WiFi** is the name given to devices that communicate wirelessly employing the IEEE 802.11 standard. They typically operate in the 2.4 GHz Industrial-Scientific-Medical (ISM) unlicensed band that is shared with ZigBee (IEEE 802.15.4) and Bluetooth (IEEE 802.15.1) communications.  The IEEE 802.11 standard describes how information is represented via radio frequency signals, i.e., the **physical** or **PHY** layer, and how communications are formatted and controlled, 
 * i.e. the media access control or MAC layer. 
 Communication requirements beyond the PHY and MAC
 * e.g. flow control, error recovery, and routing, are handled at higher levels of the internet stack. 
 
-### 1.2 Required Hardware
+### 1.5 Required Hardware
 | Part Number       | Device Function   | Source                        | Price     |
 | ----------------- | ----------------- | ----------------------------- | --------- |
 | ESP8266           | WiFi module       | from TA                       | $3.50     |
@@ -57,7 +77,7 @@ Communication requirements beyond the PHY and MAC
 | Any analog sensor |                   | find it yourself (optional)   |           |
 | LM2937-3.3        | 3.3V regulator    | from EER checkout desk        | $1.68     |
 
-### 1.3 Specifications
+### 1.6 Specifications
 This lab will create a “smart object” that connects to your smart phone via the [Blynk](https://blynk.io/) application. Your system includes:
 * A PC, running [PuTTY](https://www.putty.org/), connected to the TM4C123 through UART0 (strongly suggested for debugging)
 * A TM4C123 LaunchPad running your software
@@ -68,3 +88,140 @@ This lab will create a “smart object” that connects to your smart phone via 
 * Measure an external sensor using the ADC (extra credit). Any external sensor and any interface method is ok (ADC, I2C, or SPI).
 
 *NOTE: You will need access to a wireless access point, configured with or without security.*
+
+You are free to define the “look and feel” of your system as long as you meet the specifications listed above. Feel free to write your code using the style found in TivaWare or the book.
+
+### 1.7 Interfaces
+The TM4C123 system clock will be 80 MHz.  The PC (via [PuTTY](https://www.putty.org/)) is connected to the LaunchPad via UART0, which is embedded in the standard USB debugging cable. This link is used for debugging. The starter code uses 115200 bits/sec, 1 stop, no parity, and no flow control. There are two #defines in esp8266.h you can select either one, the other, both or neither of the UART0 or the ST7735 LCD for debugging. DEBUG1 activates UART0 debugging and DEBUG3 actives ST7735 debugging. Use the Windows device manager to determine the COM port used to communication communicate with your LaunchPad (in Device Manager, click View -> Show hidden devices to view COM ports). The interface between the ESP8266/ST7735 and the LaunchPad is shown below in Figures 4.3, 4.4, 4.5 and Table 4.1. The ESP8266 interface uses GPIO and UART ports on the LaunchPad. The ESP8266 interface uses UART5 running at 9600 bits/sec, 1 stop, no parity, and no flow control.
+
+*Note: There are two different pinout numbering schemes for the ESP8266. The schematic in Figure 4.4 below uses the pinout numbering in 4.3(B) below*
+
+![Figure 4.3a](resources/lab4/images/figure_4.3a.png)
+![Figure 4.3b](resources/lab4/images/figure_4.3b.png)
+
+*Figure 4.3: ESP 8266 Pinout numbering*
+
+![Figure 4.4](resources/lab4/images/figure_4.4.png)
+
+*Figure 4.4: Detailed schematic of the ESP8266 interface. UART5 is used. The +3V3 supply for the ESP8266 is different from the regular LaunchPad +3.3V, see Figure 4.6.*
+
+![Figure 4.5](resources/lab4/images/figure_4.5.png)
+
+*Figure 4.5: Detailed schematic of the ST7735 interface. The CARD_CS pin (pin 5) on the LCD is optional and needed only when the SDC card is being used. This 3.3V supply is the regular LaunchPad 3.3V.*
+
+```
+Pin   Signal       Direction      Pin   Signal        Direction
+P1.1  3.3 VCC         Power       P2.1  Gnd   GND       Power       
+P1.2  PB5 UNUSED      NA          P2.2  PB2   UNUSED    NA
+P1.3  PB0 CARD_CS     OUT         P2.3  PE0   ESP_RDY   IN
+P1.4  PB1 UNUSED      NA          P2.4  PF0   SWITCH    IN
+P1.5  PE4 UNUSED      NA          P2.5  Reset nRESET    IN
+P1.6  PE5 ESP_U5TX    OUT         P2.6  PB7   UNUSED    NA
+P1.7  PB4 ESP_U5RX    IN          P2.7  PB6   UNUSED    NA
+P1.8  PA5 TFT_MOSI    OUT         P2.8  PA4   TFT_MISO  IN
+P1.9  PA6 TFT_DC      OUT         P2.9  PA3   TFT_CS    OUT
+P1.10 PA7 TFT_RST     OUT         P2.10 PA2   TFT_SCK   OUT
+
+Pin   Signal       Direction      Pin   Signal        Direction
+P3.1  +5  +5 V        Power       P4.1  PF2 LED         OUT
+P3.2  Gnd GND         Power       P4.2  PF3 LED         OUT
+P3.3  PD0 TMP36_IN    IN          P4.3  PB3 UNUSED      NA
+P3.4  PD1 UNUSED      NA          P4.4  PC4 UNUSED      NA
+P3.5  PD2 UNUSED      NA          P4.5  PC5 UNUSED      NA
+P3.6  PD3 UNUSED      NA          P4.6  PC6 UNUSED      NA
+P3.7  PE1 ESP_RSTB    OUT         P4.7  PC7 UNUSED      NA
+P3.8  PE2 UNUSED      NA          P4.8  PD6 UNUSED      NA
+P3.9  PE3 Debug       OUT         P4.9  PD7 UNUSED      NA
+P3.10 PF1 LED         OUT         P4.10 PF4 SWITCH      IN
+```
+
+*Table 4.1. ESP8266, ST7735 and TMP36 connections to the TM4C123 LaunchPad.*
+
+You could use PE3 for profiling the interface. The Port F LEDs and switches are used in the starter code, but you can repurpose these pins as needed for your Lab 4.
+
+### 1.8 How to Power The System
+
+The ESP8266 draws too much current to be run off the 3.3V regulator on the LaunchPad. To supply 3.3V to the ESP8266, you must build a separate 3.3V regulator using the LM2937ET-3.3 linear regulator and two 4.7 uF tantalum capacitors (see Figure 9.2 in the book, with Vin=5.0V and both capacitors 4.7 uF).
+
+*Note: You must connect all the grounds together.*
+
+![Figure 4.6a](resources/lab4/images/figure_4.6a.png)
+![Figure 4.6b](resources/lab4/images/figure_4.6b.png)
+
+*Figure 4.6: Regulator circuit using the LM2937 linear regulator. Please test this circuit before attaching to ESP8266.*
+
+---
+
+## 2 Preparation
+
+### 2.1 Setting Up Blynk
+Read the instructions for running Blynk within [`BLYNK.md`](BLYNK.md)
+
+### 2.2 Edit `Lab3_4.c`
+Modify the line: `blynk_init("EE-IOT-Platform-03", "g!TyA>hR2JTy", "1234567890", USE_TIMER_INTERRUPT);` to have the correct `wifi_ssid`, `wifi_pass`, and `blynk_auth_token`.
+
+---
+
+## 3 Procedure
+
+### 3.1 Power the Devices
+1. Turn off power before connecting or disconnecting
+2. Connect the wires as shown in *Figure 4.4* and *Figure 4.5*
+3. Build and test the 3.3V regulator circuit shown in *Figure 4.6* before connecting this 3.3V output to the ESP8266. Place a current meter between the regulator output and the ESP8266 power input.
+4. The power to the LaunchPad and ST7735R will be derived from the USB cable connected to the LaunchPad. Note that you will NOT remove the jumper from the LaunchPad (removing the jumper would remove power to the TM4C123, and nobody wants that). The 3.3V output of the regulator is ONLY used to power the ESP8266 (and not connected to the LaunchPad 3.3V). 
+5. Turn on the LaunchPad and verify 3.3V on the LaunchPad and 3.3V to the ESP8266. Debug the software as needed.
+
+### 3.2 Run the Out of Box Blynk Code
+1. Modify the `Lab3_4.c` code with the correct `wifi_ssid`, `wifi_pass`, and `blynk_auth_token`
+2. Start a PuTTY monitor to view the debug statements that are output during Blynk's initialization
+3. Run the Lab4 code
+4. Press SW1
+5. If the ESP8266 successfully connects, PuTTY should output text that looks similar to this:
+```
+ECE445L Lab 3 & 4.
+Press SW1 to start.
+Starting...
+Resetting ESP8266.
+Reset pin held low for 5 seconds.
+Reset pin held high for 5 seconds.
+ESP8266 Reset.
+Setting up Wifi.
+Waiting for RDY to pull high from the ESP8266.
+SSID: <your_ssid>
+PASS: <your_password>
+Blynk auth code: <your_auth_code>
+Waiting for debug info.
+Waiting for RDY to pull low from the ESP.
+...........Finished setting up Wifi.
+Ready to talk to Blynk server.
+```
+
+### 3.3 Merge Lab 3
+1. Choose virtual pins for sending data from Blynk to the TM4C (virtual pins V0 -> V15)
+2. Choose virtual pins for sending data from the TM4C to Blynk (virtual pins V70 -> V99)
+
+*Note: the available pins for sending data to and from the TM4C and Blynk can be changed by reprogramming the ESP8266. The ESP8266 is programmed using the Arduino IDE. You will need to check out a special programmer to reprogram the ESP8266.*
+
+3. Set up a Blynk palette to display the alarm clock and its different functionalities.
+    * Minimum requirements:
+        1. set time
+        2. set alarm
+        3. visualize time
+4. Test the ESP8266 and TM4C system. *Figure 4.8* shows the dataflow diagram between the WiFI module and the “Smart Object”.
+
+![Figure 4.8](resources/lab4/images/figure_4.8.png)
+
+*Figure 4.8: ESP8266 ⇔ TM4C Dataflow Diagram*
+
+5. **Extra credit:** Interface a sensor and use the ADC to measure the signal. Calibrate the sensor so it reads data in a human understandable fashion. One possibility uses the TMP36 to read temperature. The TMP36. The datasheet for the TMP36 is located at: [ADI_TMP36](https://www.analog.com/media/en/technical-documentation/data-sheets/TMP35_36_37.pdf). You will have to determine how to convert the output voltage from the TMP36 to °F and °C. These values will be sent on virtual pins V70 to V99 to the Blynk App. Another possibility is the slide-pot from EE319K.
+
+#### Deliverable 1
+
+1. Add `DumpCapture` from `Lab2` to profile the interactions between the user and the alarm clock. For example, you can profile when button inputs occur and their outputs.
+2. Add `JitterMeasure` from `Lab2` to capture and measure the jitter within your clock's timer.
+
+#### Deliverable 2
+
+Take a screenshot of the Blynk interface illustrating the features of your system.
+
+### 3.4 Measure the Current

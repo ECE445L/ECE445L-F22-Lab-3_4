@@ -9,6 +9,10 @@
 1. [Summary](#1-summary)
     1. [Goal](#11-goal)
     2. [Team Size](#12-team-size)
+    3. [Background](#13-background)
+    4. [Required Hardware](#14-required-hardware-ee445l-students-purchase-these-parts-for-themselves)
+    5. [Required Parts](#15-required-parts-available-in-ece-checkout-desk)
+    6. [Requirements Document](#16-requirements-document)
 2. [Preparation](#2-preparation)
 3. [Procedure](#3-procedure)
     1. [Build Circuit](#31-build-circuit)
@@ -59,16 +63,21 @@ A gitignore file is added to the root of this repo that may prevent specific fil
 ### 1.1 Goal
 Labs in EE445L are extremely open ended. For Labs 3, 4 and 5 you will be given a requirements document. Your TA is your client or customer. A grade of B can be achieved by satisfying these minimum specifications. To achieve higher grades, you are expected to expand sections 2.1 and 2.5 describing what your system will do. You are free to make any changes to this document as long you achieve the educational goals for the lab. All changes must be approved by your TA. Excellent grades are reserved for systems with extra features and are easy to operate. You will need your LaunchPad and color LCD. From checkout you can borrow speaker, switches, IRLD024 or IRLD120 MOSFET, 1N914, and some resistors for this lab.
 
-### 1.2 Background
+### 1.2 Team Size:
+The team size for this lab is 2.
+
+> Two shall be the number thou shalt count, and the number of the counting shall be two. Three shalt thou not count, neither count thou one, excepting that thou then proceed to two. Four is right out.
+
+### 1.3 Background
 Labs in EE445L are extremely open ended. For Labs 3, 4 and 5 you will be given a requirements document. Your TA is your client or customer. A grade of B can be achieved by satisfying these minimum specifications. To achieve higher grades, you are expected to expand sections 2.1 and 2.5 describing what your system will do. You are free to make any changes to this document as long you achieve the educational goals for the lab. All changes must be approved by your TA. Excellent grades are reserved for systems with extra features and are easy to operate. You will need your LaunchPad and color LCD. From checkout you can borrow speaker, switches, IRLD024 or IRLD120 MOSFET, 1N914, and some resistors for this lab.
 
-#### 1.3 Required Hardware (EE445L students purchase these parts for themselves)
+### 1.4 Required Hardware (EE445L students purchase these parts for themselves)
 | Part                          | Website                                                                       | Price     |
 | ----------------------------- | ----------------------------------------------------------------------------- | --------- |
 | EK-TM4C123GXL                 | [http://www.ti.com](http://www.ti.com)                                        | $12.99    |
 | Sitronix ST7735R Color LCD    | [http://www.adafruit.com/products/358](http://www.adafruit.com/products/358)  | $12.99    |
 
-#### 1.4 Required Parts (available in ECE checkout desk)
+### 1.5 Required Parts (available in ECE checkout desk)
 | Part                  | www.mouser.com    | www.element14.com | www.digikey.com   | Price |
 | --------------------- | ----------------- | ----------------- | ----------------- | ----- |
 | IRLD120 MOSFET        | 844-IRLD120PBF    | 19K8369           | IRLD120PBF-ND     | $1.07 |
@@ -81,7 +90,7 @@ Any 8 to 32 ohm speaker will suffice, search speaker at
 * [https://www.digikey.com](https://www.digikey.com)
 * [https://www.element14.com](https://www.element14.com)
 
-#### 1.5 Requirements document
+### 1.6 Requirements document
 1. Overview
     1. Objectives: Why are we doing this project? What is the purpose? 
         * The objectives of this project are to design, build and test an alarm clock. Educationally, students are learning how to design and test modular software and how to perform switch/keypad input in the background.
