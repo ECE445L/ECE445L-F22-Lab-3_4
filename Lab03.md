@@ -9,7 +9,7 @@
     - [0.3 Resources](#03-resources)
     - [0.4 Git and Github](#04-git-and-github)
   - [1 Summary](#1-summary)
-    - [1.1 Goal](#11-goal)
+    - [1.1 Goasl](#11-goals)
     - [1.2 Review](#12-review)
     - [1.3 Team Size:](#12-team-size)
     - [1.4 Background](#13-background)
@@ -69,7 +69,7 @@ A gitignore file is added to the root of this repo that may prevent specific fil
 
 ## 1 Summary
 
-### 1.1 Goal
+### 1.1 Goals
 Labs in ECE445L are extremely open ended. For Labs 3, 4 and 5 you will be given a [requirements document](Requirements%20Document.docx). Your TA is your client or customer. A grade of B can be achieved by satisfying the minimum specifications listed by the document. To achieve higher grades, you are expected to expand sections 2.1 and 2.5 describing what your system will do. You are free to make any changes to this document as long you achieve the educational goals for the lab. All changes must be approved by your TA. Excellent grades are reserved for systems with extra features and are easy to operate. You will need your LaunchPad and color LCD. From checkout you can borrow speaker, switches, IRLD024 or IRLD120 MOSFET, 1N914, and some resistors for this lab. 
 
 ### 1.2 Review
