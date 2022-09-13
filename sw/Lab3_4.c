@@ -62,8 +62,10 @@
 /* Add whatever else you need here! */
 #include "./lib/RGB/RGB.h"
 
-/* TODO: We suggest using the ./inc/ADCSWTrigger.h and the ./inc/TimerXA.h headers. */
+/* TODO: enable this for lab 4 */
+#define LAB_4 false
 
+/* TODO: We suggest using the ./inc/ADCSWTrigger.h and the ./inc/TimerXA.h headers. */
 
 /** MMAP Pin definitions. */
 #define PF0   (*((volatile uint32_t *)0x40025004)) // Left Button
@@ -141,10 +143,12 @@ int main(void) {
 
     /* Setup ESP8266 to talk to Blynk server. See blynk.h for what each field does. */
     // TODO: enable this for lab 4
-		// #define USE_TIMER_INTERRUPT true
-    // blynk_init("EE-IOT-Platform-03", "g!TyA>hR2JTy", "1234567890", USE_TIMER_INTERRUPT);
-		// #undef USE_TIMER_INTERRUPT
-		
+		#if LAB_4
+			#define USE_TIMER_INTERRUPT true
+			// blynk_init("EE-IOT-Platform-03", "g!TyA>hR2JTy", "1234567890", USE_TIMER_INTERRUPT);
+			// #undef USE_TIMER_INTERRUPT
+		#endif
+
     while (1) {
         /* TODO: Write your code here! */
         WaitForInterrupt();
