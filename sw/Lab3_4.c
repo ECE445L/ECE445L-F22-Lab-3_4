@@ -62,7 +62,7 @@
 /* Add whatever else you need here! */
 #include "./lib/RGB/RGB.h"
 
-/* TODO: enable this for lab 4 */
+/* TODO: enable this for lab 4. */
 #define LAB_4 false
 
 /* TODO: We suggest using the ./inc/ADCSWTrigger.h and the ./inc/TimerXA.h headers. */
@@ -145,8 +145,8 @@ int main(void) {
     // TODO: enable this for lab 4
 		#if LAB_4
 			  #define USE_TIMER_INTERRUPT true
-			  // blynk_init("EE-IOT-Platform-03", "g!TyA>hR2JTy", "1234567890", USE_TIMER_INTERRUPT);
-			  // #undef USE_TIMER_INTERRUPT
+			  blynk_init("EE-IOT-Platform-03", "g!TyA>hR2JTy", "1234567890", USE_TIMER_INTERRUPT);
+			  #undef USE_TIMER_INTERRUPT
 		#endif
 
     while (1) {
