@@ -1,11 +1,13 @@
 # BLYNK.md
 
 ## Prerequisites
+
 1. Hardware is setup (TM4C hooked up to ESP8266 via UART)
 2. ESP8266 is flashed with latest [firmware](https://github.com/ECE445L/EE445L-SP22-ESP8266-Blynk)
     1. See section [Updating ESP8266](#updating-esp8266)
 
 ## Running Blynk
+
 1. Log in/Create an account
 2. Go to my devices page
 3. Create a new device and use Quickstart Template
@@ -17,6 +19,7 @@
 7. If the HW is setup properly, then Blynk should say the device is online.
 
 ## Updating ESP8266
+
 1. Download the [Arduino IDE](https://www.arduino.cc/en/software)
     1. Last tested version: `1.8.19`
 2. Add ESP8266 indices to Arduino board manager URLs `https://arduino.esp8266.com/stable/package_esp8266com_index.json`

@@ -1,16 +1,38 @@
 # Lab 4 Internet of Things
 
-> This document is under construction. Please see again in v2.1!
-
 ## Table of Contents
 
-0. [Repository Structure](#0-repository-structure)
-    1. [HW](#01-hw)
-    2. [SW](#02-sw)
-    3. [Resources](#03-resources)
-    4. [Git and Github](#04-git-and-github)
-
-// TODO: Update ToC
+- [Lab 4 Internet of Things](#lab-4-internet-of-things)
+  - [Table of Contents](#table-of-contents)
+  - [0 Repository Structure](#0-repository-structure)
+    - [0.1 HW](#01-hw)
+    - [0.2 SW](#02-sw)
+    - [0.3 Resources](#03-resources)
+    - [0.4 Git and Github](#04-git-and-github)
+  - [1 Summary](#1-summary)
+    - [1.1 Goals](#11-goals)
+    - [1.2 Team Size](#12-team-size)
+    - [1.3 Review](#13-review)
+    - [1.4 Background](#14-background)
+    - [1.5 Required Hardware](#15-required-hardware)
+    - [1.6 Specifications](#16-specifications)
+    - [1.7 Interfaces](#17-interfaces)
+    - [1.8 How to Power The System](#18-how-to-power-the-system)
+  - [2 Preparation](#2-preparation)
+    - [2.1 Setting Up Blynk](#21-setting-up-blynk)
+    - [2.2 Edit `Lab3_4.c`](#22-edit-lab3_4c)
+  - [3 Procedure](#3-procedure)
+    - [3.1 Power the Devices](#31-power-the-devices)
+    - [3.2 Run the Out of Box Blynk Code](#32-run-the-out-of-box-blynk-code)
+    - [3.3 Merge Lab 3](#33-merge-lab-3)
+      - [Deliverable 1](#deliverable-1)
+      - [Deliverable 2](#deliverable-2)
+    - [3.4 Measure the Current](#34-measure-the-current)
+      - [Deliverable 3](#deliverable-3)
+    - [4 Checkout](#4-checkout)
+    - [5 Report](#5-report)
+      - [5.1 Deliverables](#51-deliverables)
+      - [5.2 Analysis and Discussion Questions](#52-analysis-and-discussion-questions)
 
 ---
 
@@ -69,8 +91,6 @@ through that we want. Feel free to modify if necessary.
 
 ## 1 Summary
 
-// TODO: captions for Figs
-
 ### 1.1 Goals
 
 * Implement a “smart object” that connects to a phone application (Blynk) via a
@@ -86,6 +106,8 @@ through that we want. Feel free to modify if necessary.
   its value is an extra credit component.
 
 ![Figure 4.1](resources/lab4/images/figure_4.1.png)
+
+*Figure 4.1*
 
 ### 1.2 Team Size
 
@@ -182,7 +204,6 @@ Figure 4.6.*
 on the LCD is optional and needed only when the SDC card is being used. This
 3.3V supply is the regular LaunchPad 3.3V.*
 
-
 ```
 Pin   Signal       Direction      Pin   Signal        Direction
 P1.1  3.3 VCC         Power       P2.1  Gnd   GND       Power       
@@ -210,7 +231,6 @@ P3.10 PF1 LED         OUT         P4.10 PF4 SWITCH      IN
 ```
 
 *Table 4.1. ESP8266, ST7735 and TMP36 connections to the TM4C123 LaunchPad.*
-
 
 ### 1.8 How to Power The System
 
@@ -368,7 +388,7 @@ TA.
 
 ### 5 Report
 
-#### 5.1 Deliverables:
+#### 5.1 Deliverables
 
 1. Objectives (1/2 page maximum)
 2. Hardware design (if you included a new sensor for the extra credit)
