@@ -1,6 +1,8 @@
-# EE445L-SP22-Lab3
-Lab 3 Template. Note that of 09/13/22, the Lab 4 instructions are not up to
-date and are subject to change. Drastically. 
+# EE445L-SP22-Lab3-4
+
+Lab 3 and 4 Template.
+[Lab 3 README](Lab03.md)
+[Lab 4 README](Lab04.md)
 
 ## HW
 
