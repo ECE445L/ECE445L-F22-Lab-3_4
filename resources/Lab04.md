@@ -227,3 +227,41 @@ Ready to talk to Blynk server.
 Take a screenshot of the Blynk interface illustrating the features of your system.
 
 ### 3.4 Measure the Current
+
+1. Disconnect the USB cable from the PC
+2. Set the DC power supply's limits to +5V and 200mA
+3. Connect the +5V line to VBUS and GND to GND
+4. Measure the voltage on the TM4C's 3.3V pin and the 3.3V line coming out of the voltage regulator
+5. Measure the whole unit's current for:
+   1. The clock without the ESP
+   2. The clock with the alarm on and without the ESP
+   3. The clock with the ESP
+   4. The clock with the alarm on and with the ESP
+6. Measure the current draw of the ESP:
+   1. While it is not transmitting data
+   2. While it is transmitting data
+7. Measure the current draw of the LCD screen
+#### Deliverable 3
+
+Document the current measurements that you took.
+
+### 4 Checkout
+
+Demonstrate that your system can control the Clock on the TM4C display data using the Blynk Application. Demonstrate that your system can read the sensor (extra credit) and time on the TM4C. Upload your software as instructed by your TA.
+
+### 5 Report
+
+#### 5.1 Deliverables:
+1. Objectives (1/2 page maximum)
+2. Hardware design (if you included a new sensor for the extra credit)
+3. Software design (upload your files as instructed by your TA)
+4. [Deliverable 1](#deliverable-1)
+5. [Deliverable 2](#deliverable-2)
+6. [Deliverable 3](#deliverable-3)
+
+#### 5.2 Analysis and Discussion Questions
+
+Read the tutorial on the [Internet of Things](http://users.ece.utexas.edu/~valvano/Volume1/E-Book/C16_InternetOfThings.htm) before answering the following questions:
+1. In the client server paradigm, explain the sequence of internet communications sent from client to server and from server to client as the client saves data on the server. Assume the client already is connected to the WiFi AP and the client knows the IP address of the server.
+2. What is the purpose of the DNS?
+3. What is the difference between UDP and TCP/IP communication? More specifically when should we use UDP and when should we use TCP/IP?
