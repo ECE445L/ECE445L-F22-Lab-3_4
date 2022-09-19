@@ -41,3 +41,78 @@
     2. Select open port, assuming only one USB device is currently connected
 9. Connect ESP8266 to ECE 445L ESP8266 flasher board (or similar UART-USB FTDI board)
 10. Upload using flash button (rightward facing arrow).
+
+## Creating a Blynk Device
+
+1. Sign into Blynk
+
+![Sign In](resources/lab4/images/blynk/blynk_login.png)
+
+2. Create a template for your device
+    1. Click the `Template` icon in the left taskbar
+    2. Click the `+ New Template` button in the top right corner of the screen
+    3. Name your template
+    4. Select `ESP8266` as the hardware
+    5. Click `Done`
+
+![Create Template](resources/lab4/images/blynk/create_template.png)
+
+3. Create datastreams for your widgets to connect to
+    1. Click the `Datastreams` tab at the top of the screen
+    2. Click the `+ New Datastream` button in the top right corner of the screen
+    3. Name the datastream and select the virtual pin that it corresponds to
+    4. Edit the rest of the datastream's settings as you like
+    5. Click `Create`
+
+![Create Datasheet](resources/lab4/images/blynk/create_datastream.png)
+
+4. Create a dashboard
+    1. Click the `Datastreams` tab at the top of the screen
+    2. Drag widgets from the widget box on the left of the screen
+    3. Click a widget's `gear icon` to edit it
+    4. Name the widget and set its corresponding datastream
+    5. Click `Save`
+
+![Blank Dashboard](resources/lab4/images/blynk/blank_dashboard.png)
+
+![Edit Widget](resources/lab4/images/blynk/edit_widget.png)
+
+![Complete Dashboard](resources/lab4/images/blynk/completed_dashboard.png)
+
+5. Create a device
+    1. Save the template you created by clicking the `Save` button in the top right corner of the screen
+    2. Click the `Search` icon in the left taskbar
+    3. Click the `+ New Device` button in the top right corner of the screen
+    4. Select the `From template` option
+    5. Select the template you created
+    6. Name the device
+    7. Copy the `BLYNK_AUTH_TOKEN` from the top right corner of the screen
+
+![Create Device](resources/lab4/images/blynk/create_device.png)
+
+![Name Device](resources/lab4/images/blynk/name_device.png)
+
+![Device Hom](resources/lab4/images/blynk/device_home.png)
+
+6. Create a mobile dashboard
+    1. Log into the mobile app
+    2. Click the device that you created earlier
+    3. Click the `wrench` button in the top right corner of the screen to edit the dashboard
+    4. Click the `+` button in the top right corner of the screen to add a widget
+    5. Click the widget to edit it
+    6. Name the widget and set its corresponding datastream
+    7. Click the `X` button in the top left corner to exit the editor
+
+![Mobile Home](resources/lab4/images/blynk/mobile_home.png)
+
+![Mobile Device Home](resources/lab4/images/blynk/mobile_device_home.png)
+
+![Mobile Palette Editor](resources/lab4/images/blynk/palette_editor.png)
+
+![Mobile Widget Box](resources/lab4/images/blynk/widget_box.png)
+
+![Slider Widget](resources/lab4/images/blynk/slider_editor.png)
+
+![Display Widget](resources/lab4/images/blynk/display_widget.png)
+
+![Complete Mobile Dashboard](resources/lab4/images/blynk/palette_editor_complete.png)
