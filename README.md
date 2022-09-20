@@ -6,7 +6,7 @@ Lab 3 and 4 Template.
 
 [Lab 4 README](Lab04.md)
 
-[Blynk README](BLYNK.md)
+[Blynk README](Blynk.md)
 
 ## HW
 
