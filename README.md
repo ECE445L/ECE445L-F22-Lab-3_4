@@ -6,6 +6,8 @@ Lab 3 and 4 Template.
 
 [Lab 4 README](Lab04.md)
 
+[Blynk README](BLYNK.md)
+
 ## HW
 
 The HW folder should contain your schematic and board files for your PCB or
