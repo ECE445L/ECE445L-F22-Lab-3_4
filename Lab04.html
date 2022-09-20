@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Lab04</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="lab-4-internet-of-things">Lab 4 Internet of Things</h1>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#lab-4-internet-of-things">Lab 4 Internet of Things</a>
+<ul>
+<li><a href="#table-of-contents">Table of Contents</a></li>
+<li><a href="#0-repository-structure">0 Repository Structure</a>
+<ul>
+<li><a href="#01-hw">0.1 HW</a></li>
+<li><a href="#02-sw">0.2 SW</a></li>
+<li><a href="#03-resources">0.3 Resources</a></li>
+<li><a href="#04-git-and-github">0.4 Git and Github</a></li>
+</ul></li>
+<li><a href="#1-summary">1 Summary</a>
+<ul>
+<li><a href="#11-goals">1.1 Goals</a></li>
+<li><a href="#12-team-size">1.2 Team Size</a></li>
+<li><a href="#13-review">1.3 Review</a></li>
+<li><a href="#14-background">1.4 Background</a></li>
+<li><a href="#15-required-hardware">1.5 Required Hardware</a></li>
+<li><a href="#16-specifications">1.6 Specifications</a></li>
+<li><a href="#17-interfaces">1.7 Interfaces</a></li>
+<li><a href="#18-how-to-power-the-system">1.8 How to Power The System</a></li>
+</ul></li>
+<li><a href="#2-preparation">2 Preparation</a>
+<ul>
+<li><a href="#21-setting-up-blynk">2.1 Setting Up Blynk</a></li>
+<li><a href="#22-edit-lab3_4c">2.2 Edit <code>Lab3_4.c</code></a></li>
+</ul></li>
+<li><a href="#3-procedure">3 Procedure</a>
+<ul>
+<li><a href="#31-power-the-devices">3.1 Power the Devices</a></li>
+<li><a href="#32-run-the-out-of-box-blynk-code">3.2 Run the Out of Box Blynk Code</a></li>
+<li><a href="#33-merge-lab-3">3.3 Merge Lab 3</a>
+<ul>
+<li><a href="#331-deliverable-1">3.3.1 Deliverable 1</a></li>
+<li><a href="#332-deliverable-2">3.3.2 Deliverable 2</a></li>
+</ul></li>
+<li><a href="#34-measure-the-current">3.4 Measure the Current</a>
+<ul>
+<li><a href="#341-deliverable-3">3.4.1 Deliverable 3</a></li>
+</ul></li>
+<li><a href="#4-checkout">4 Checkout</a></li>
+<li><a href="#5-report">5 Report</a>
+<ul>
+<li><a href="#51-deliverables">5.1 Deliverables</a></li>
+<li><a href="#52-analysis-and-discussion-questions">5.2 Analysis and Discussion Questions</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+<hr />
+<h2 id="repository-structure">0 Repository Structure</h2>
+<p>The typical explanation for the repo structure. Lab specific instructions can be found further below.</p>
+<h3 id="hw">0.1 HW</h3>
+<p>The <code>hw</code> folder should contain your schematic and board files for your PCB or circuits. In labs 1-5 and 10, you will be creating schematics for your circuit in EAGLE. A setup tutorial can be found <a href="https://www.shawnvictor.net/autodesk-eagle.html">here</a>.</p>
+<h3 id="sw">0.2 SW</h3>
+<p>The <code>sw</code> folder should contain your application firmware and software written for the lab. The <code>sw/inc</code> folder contains firmware drivers written for you by Professor Valvano. Feel free to write your own (in fact, in some labs, you may be required to write your own).</p>
+<p>You can place any other source files in the <code>sw/</code> folder. TAs will look at the files you create and/or modify for software quality and for running your project.</p>
+<h3 id="resources">0.3 Resources</h3>
+<p>A couple files are provided in the Resources folder so you don’t have to keep searching for that one TI document. Some of them are immediately useful, like the TM4C datasheet. Others may be useful for your final project, like the TM4C_System_Design_Guidelines page.</p>
+<h3 id="git-and-github">0.4 Git and Github</h3>
+<p>We will extensively use Git and Github for managing lab projects. This makes it easier for TAs to grade and help debug the project by allowing us to see commit histories, maintain a common project structure, and likewise, it makes it easier for students to collaborate with partners, merge different codebases, and to debug their work by having a history of commits.</p>
+<p>Two common ways of using Git and Github are <a href="https://desktop.github.com/">Github Desktop</a> and the <a href="https://git-scm.com/downloads">command line</a>. <a href="https://dev.to/mollynem/git-github--workflow-fundamentals-5496">Tutorials</a> are also abundant on the net for you to peruse. We’ve provided a cheatsheet for git in the Resources folder.</p>
+<p>It is highly recommended to make the most out of Git, even if you’ve never used it before. Version control will save you a lot of suffering, and tools like Git or SVN are ubiquitous in the industry.</p>
+<p>A gitignore file is added to the root of this repo that may prevent specific files from being tagged to the repo. This are typically autogenerated output files we don’t care about, but sometimes other stuff (like .lib files) falls through that we want. Feel free to modify if necessary.</p>
+<hr />
+<h2 id="summary">1 Summary</h2>
+<h3 id="goals">1.1 Goals</h3>
+<ul>
+<li>Implement a “smart object” that connects to a phone application (Blynk) via a cloud based server using the ESP8266 WiFi module connected to the TM4C123. (Fig 4.1)</li>
+<li>Remotely control the alarm clock developed in Lab 3 via the “Blynk Virtual Pin” interface.</li>
+<li>Replace the manual switches from Lab 3 with Virtual Pin (VP) Switches.</li>
+<li>Remotely read the Hour/Minutes/Seconds via the “Blynk Virtual Pin” interface. Display the data on the Blynk App.</li>
+<li>Extra Credit: Remotely read any sensor and via the “Blynk Virtual Pin” interface. Display the data on the Blynk App. Reading a sensor and displaying its value is an extra credit component.</li>
+</ul>
+<p><img src="resources/lab4/images/figure_4.1.png" alt="Figure 4.1" /></p>
+<p><em>Figure 4.1</em></p>
+<h3 id="team-size">1.2 Team Size</h3>
+<p>The team size for this lab is 2.</p>
+<blockquote>
+<p>Two shall be the number thou shalt count, and the number of the counting shall be two. Three shalt thou not count, neither count thou one, excepting that thou then proceed to two. Four is right out.</p>
+</blockquote>
+<h3 id="review">1.3 Review</h3>
+<ul>
+<li>Valvano Section 11.4 on internet of things and this web page: <a href="http://users.ece.utexas.edu/~valvano/Volume1/E-Book/C16_InternetOfThings.htm">Internet Of Things</a></li>
+<li><a href="https://blynk.io/en/getting-started">Getting started with the Blynk Application</a></li>
+<li><a href="http://users.ece.utexas.edu/~valvano/EE445L/SetupESP8266ProgrammingEnvironment.htm">Programming environment for the ESP8266</a></li>
+<li><a href="https://playground.arduino.cc/uploads/Main/arduino_notebook_v1-1.pdf">Arduino programming</a></li>
+</ul>
+<h3 id="background">1.4 Background</h3>
+<p><strong>WiFi</strong> is the name given to devices that communicate wirelessly employing the IEEE 802.11 standard. They typically operate in the 2.4 GHz Industrial-Scientific-Medical (ISM) unlicensed band that is shared with ZigBee (IEEE 802.15.4) and Bluetooth (IEEE 802.15.1) communications. The IEEE 802.11 standard describes how information is represented via radio frequency signals, i.e., the <strong>physical</strong> or <strong>PHY</strong> layer, and how communications are formatted and controlled.</p>
+<h3 id="required-hardware">1.5 Required Hardware</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Part Number</th>
+<th>Device Function</th>
+<th>Source</th>
+<th>Price</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ESP8266</td>
+<td>WiFi module</td>
+<td>from TA</td>
+<td>$3.50</td>
+</tr>
+<tr class="even">
+<td>ST7735</td>
+<td>LCD module</td>
+<td>yours</td>
+<td>$19.99</td>
+</tr>
+<tr class="odd">
+<td>EK-TM4C123GXL</td>
+<td>TiVa LaunchPad</td>
+<td>yours</td>
+<td>$12.99</td>
+</tr>
+<tr class="even">
+<td>Any analog sensor</td>
+<td>Extracredit</td>
+<td>find it yourself (optional)</td>
+<td>???</td>
+</tr>
+<tr class="odd">
+<td>LM2937-3.3</td>
+<td>3.3V regulator</td>
+<td>from EER checkout desk</td>
+<td>$1.68</td>
+</tr>
+</tbody>
+</table>
+<h3 id="specifications">1.6 Specifications</h3>
+<p>This lab will create a “smart object” that connects to your smart phone via the <a href="https://blynk.io/">Blynk</a> application. Your system includes:</p>
+<ul>
+<li>A PC, running <a href="https://www.putty.org/">PuTTY</a>, connected to the TM4C123 through UART0 (strongly suggested for debugging).</li>
+<li>A TM4C123 LaunchPad running your software.</li>
+<li>An ESP8266 WiFi module that is configured with the Blynk ESP8266 WiFi code.</li>
+<li>A ST7735 or any LCD showing the time.</li>
+<li>Use Lab 2 code to record incoming messages and outgoing jitter.</li>
+</ul>
+<p>The minimum requirements are to be able to set time, set alarm, and visualize the time from the phone. There must be at least 3 displays (hour, minute, second) and 3 buttons.</p>
+<p>Measure an external sensor using the ADC (extra credit). Any external sensor and any interface method is okay (ADC, I2C, or SPI).</p>
+<p><em>NOTE: You will need access to a wireless access point, configured with or without security.</em></p>
+<p>You are free to define the “look and feel” of your system as long as you meet the specifications listed above. Feel free to write your code using the style found in TivaWare or the book.</p>
+<h3 id="interfaces">1.7 Interfaces</h3>
+<p>The TM4C123 system clock will be 80 MHz. The PC (via <a href="https://www.putty.org/">PuTTY</a>) is connected to the LaunchPad via UART0, which is embedded in the standard USB debugging cable. This link is used for debugging. The starter code uses 115200 bits/sec, 1 stop, no parity, and no flow control.</p>
+<p>Use the Windows device manager to determine the COM port used to communication communicate with your LaunchPad (in Device Manager, click View -&gt; Show hidden devices to view COM ports). The interface between the ESP8266/ST7735 and the LaunchPad is shown below in Figures 4.3, 4.4, 4.5 and Table 4.1. The ESP8266 interface uses GPIO and UART ports on the LaunchPad. The ESP8266 interface uses UART5 running at 9600 bits/sec, 1 stop, no parity, and no flow control.</p>
+<p><em>Note: There are two different pinout numbering schemes for the ESP8266. The schematic in Figure 4.4 below uses the pinout numbering in 4.3(B) below.</em></p>
+<p><img src="resources/lab4/images/figure_4.3a.png" alt="Figure 4.3a" /> <img src="resources/lab4/images/figure_4.3b.png" alt="Figure 4.3b" /></p>
+<p><em>Figure 4.3: ESP 8266 Pinout numbering</em></p>
+<p><img src="resources/lab4/images/figure_4.4.png" alt="Figure 4.4" /></p>
+<p><em>Figure 4.4: Detailed schematic of the ESP8266 interface. UART5 is used. The +3V3 supply for the ESP8266 is different from the regular LaunchPad +3.3V, see Figure 4.6.</em></p>
+<p><img src="resources/lab4/images/figure_4.5.png" alt="Figure 4.5" /></p>
+<p><em>Figure 4.5: Detailed schematic of the ST7735 interface. The CARD_CS pin (pin 5) on the LCD is optional and needed only when the SDC card is being used. This 3.3V supply is the regular LaunchPad 3.3V.</em></p>
+<pre><code>Pin   Signal       Direction      Pin   Signal        Direction
+P1.1  3.3 VCC         Power       P2.1  Gnd   GND       Power       
+P1.2  PB5 UNUSED      NA          P2.2  PB2   UNUSED    NA
+P1.3  PB0 CARD_CS     OUT         P2.3  PE0   ESP_RDY   IN
+P1.4  PB1 UNUSED      NA          P2.4  PF0   SWITCH    IN
+P1.5  PE4 UNUSED      NA          P2.5  Reset nRESET    IN
+P1.6  PE5 ESP_U5TX    OUT         P2.6  PB7   UNUSED    NA
+P1.7  PB4 ESP_U5RX    IN          P2.7  PB6   UNUSED    NA
+P1.8  PA5 TFT_MOSI    OUT         P2.8  PA4   TFT_MISO  IN
+P1.9  PA6 TFT_DC      OUT         P2.9  PA3   TFT_CS    OUT
+P1.10 PA7 TFT_RST     OUT         P2.10 PA2   TFT_SCK   OUT
+
+Pin   Signal       Direction      Pin   Signal        Direction
+P3.1  +5  +5 V        Power       P4.1  PF2 LED         OUT
+P3.2  Gnd GND         Power       P4.2  PF3 LED         OUT
+P3.3  PD0 TMP36_IN    IN          P4.3  PB3 UNUSED      NA
+P3.4  PD1 UNUSED      NA          P4.4  PC4 UNUSED      NA
+P3.5  PD2 UNUSED      NA          P4.5  PC5 UNUSED      NA
+P3.6  PD3 UNUSED      NA          P4.6  PC6 UNUSED      NA
+P3.7  PE1 ESP_RSTB    OUT         P4.7  PC7 UNUSED      NA
+P3.8  PE2 UNUSED      NA          P4.8  PD6 UNUSED      NA
+P3.9  PE3 Debug       OUT         P4.9  PD7 UNUSED      NA
+P3.10 PF1 LED         OUT         P4.10 PF4 SWITCH      IN</code></pre>
+<p><em>Table 4.1. ESP8266, ST7735 and TMP36 connections to the TM4C123 LaunchPad.</em></p>
+<h3 id="how-to-power-the-system">1.8 How to Power The System</h3>
+<p>The ESP8266 draws too much current to be run off the 3.3V regulator on the LaunchPad. To supply 3.3V to the ESP8266, you must build a separate 3.3V regulator using the LM2937ET-3.3 linear regulator and two 4.7 uF tantalum capacitors (see Figure 9.2 in the book, with Vin=5.0V and both capacitors 4.7 uF).</p>
+<p><em>Note: You must connect all the grounds together.</em></p>
+<p><img src="resources/lab4/images/figure_4.6a.png" alt="Figure 4.6a" /> <img src="resources/lab4/images/figure_4.6b.png" alt="Figure 4.6b" /></p>
+<p><em>Figure 4.6: Regulator circuit using the LM2937 linear regulator. Please test this circuit before attaching to ESP8266.</em></p>
+<hr />
+<h2 id="preparation">2 Preparation</h2>
+<h3 id="setting-up-blynk">2.1 Setting Up Blynk</h3>
+<p>Read the instructions for running Blynk within <a href="BLYNK.md"><code>BLYNK.md</code></a>.</p>
+<h3 id="edit-lab3_4.c">2.2 Edit <code>Lab3_4.c</code></h3>
+<p>Modify and enable the line</p>
+<p><code>blynk_init("EE-IOT-Platform-03", "g!TyA&gt;hR2JTy", "1234567890", USE_TIMER_INTERRUPT);</code></p>
+<p>to have the correct <code>wifi_ssid</code>, <code>wifi_pass</code>, and<code>blynk_auth_token</code>. Set <code>USE_TIMER_INTERRUPT</code> to false if you want to manually pull updates from the ESP8266 instead of relying on a populating queue. See the API for further usage.</p>
+<hr />
+<h2 id="procedure">3 Procedure</h2>
+<h3 id="power-the-devices">3.1 Power the Devices</h3>
+<ol type="1">
+<li>Turn off power before connecting or disconnecting.</li>
+<li>Connect the wires as shown in <em>Figure 4.4</em> and <em>Figure 4.5</em>.</li>
+<li>Build and test the 3.3V regulator circuit shown in <em>Figure 4.6</em> before connecting this 3.3V output to the ESP8266. Place a current meter between the regulator output and the ESP8266 power input.</li>
+<li>The power to the LaunchPad and ST7735R will be derived from the USB cable connected to the LaunchPad. Note that you will NOT remove the jumper from the LaunchPad (removing the jumper would remove power to the TM4C123, and nobody wants that). The 3.3V output of the regulator is ONLY used to power the ESP8266 (and not connected to the LaunchPad 3.3V).</li>
+<li>Turn on the LaunchPad and verify 3.3V on the LaunchPad and 3.3V to the ESP8266. Debug the software as needed.</li>
+</ol>
+<h3 id="run-the-out-of-box-blynk-code">3.2 Run the Out of Box Blynk Code</h3>
+<ol type="1">
+<li>Start a PuTTY monitor to view the debug statements that are output during Blynk’s initialization.</li>
+<li>Run the Lab4 code.</li>
+<li>Press SW1 when prompted.</li>
+<li>If the ESP8266 successfully connects, PuTTY should output text that looks similar to this:</li>
+</ol>
+<pre><code>ECE445L Lab 3 &amp; 4.
+Press SW1 to start.
+Starting...
+Resetting ESP8266.
+Reset pin held low for 5 seconds.
+Reset pin held high for 5 seconds.
+ESP8266 Reset.
+Setting up Wifi.
+Waiting for RDY to pull high from the ESP8266.
+SSID: &lt;your_ssid&gt;
+PASS: &lt;your_password&gt;
+Blynk auth code: &lt;your_auth_code&gt;
+Waiting for debug info.
+Waiting for RDY to pull low from the ESP.
+...........Finished setting up Wifi.
+Ready to talk to Blynk server.</code></pre>
+<h3 id="merge-lab-3">3.3 Merge Lab 3</h3>
+<ol type="1">
+<li>Choose virtual pins for sending data from Blynk to the TM4C (virtual pins V0 -&gt; V15)</li>
+<li>Choose virtual pins for sending data from the TM4C to Blynk (virtual pins V70 -&gt; V99)</li>
+</ol>
+<p><em>Note: the available pins for sending data to and from the TM4C and Blynk can be changed by reprogramming the ESP8266. The ESP8266 is programmed using the Arduino IDE. You will need to check out a special programmer to reprogram the ESP8266.</em></p>
+<ol start="3" type="1">
+<li>Set up a Blynk palette to display the alarm clock and its different functionalities.
+<ul>
+<li>Minimum requirements:
+<ol type="1">
+<li>set time</li>
+<li>set alarm</li>
+<li>visualize time</li>
+</ol></li>
+</ul></li>
+<li>Test the ESP8266 and TM4C system. <em>Figure 4.8</em> shows the dataflow diagram between the WiFI module and the “Smart Object”.</li>
+</ol>
+<p><img src="resources/lab4/images/figure_4.8.jpg" alt="Figure 4.8" /></p>
+<p><em>Figure 4.8: ESP8266 and TM4C Dataflow Diagram</em></p>
+<ol start="5" type="1">
+<li><p><strong>Extra credit:</strong> Interface a sensor and use the ADC to measure the signal. Calibrate the sensor so it reads data in a human understandable fashion. One possibility uses the TMP36 to read temperature. The datasheet for the TMP36 is located at: <a href="https://www.analog.com/media/en/technical-documentation/data-sheets/TMP35_36_37.pdf">ADI_TMP36</a>.</p>
+<p>You will have to determine how to convert the output voltage from the TMP36 to °F and °C. These values will be sent on virtual pins V70 to V99 to the Blynk App. Another possibility is the slide-pot from EE319K.</p></li>
+</ol>
+<h4 id="deliverable-1">3.3.1 Deliverable 1</h4>
+<ol type="1">
+<li>Add <code>DumpCapture</code> from <code>Lab2</code> to profile the interactions between the user and the alarm clock. For example, you can profile when button inputs occur and their outputs.</li>
+<li>Add <code>JitterMeasure</code> from <code>Lab2</code> to capture and measure the jitter within your clock’s timer.</li>
+</ol>
+<h4 id="deliverable-2">3.3.2 Deliverable 2</h4>
+<p>Take a screenshot of the Blynk interface illustrating the features of your system.</p>
+<h3 id="measure-the-current">3.4 Measure the Current</h3>
+<ol type="1">
+<li>Disconnect the USB cable from the PC.</li>
+<li>Set the DC power supply’s limits to +5V and 200mA.</li>
+<li>Connect the +5V line to VBUS and GND to GND.</li>
+<li>Measure the voltage on the TM4C’s 3.3V pin and the 3.3V line coming out of the voltage regulator.</li>
+<li>Measure the whole unit’s current for:
+<ol type="1">
+<li>The clock without the ESP.</li>
+<li>The clock with the alarm on and without the ESP.</li>
+<li>The clock with the ESP.</li>
+<li>The clock with the alarm on and with the ESP.</li>
+</ol></li>
+<li>Measure the current draw of the ESP:
+<ol type="1">
+<li>While it is not transmitting data.</li>
+<li>While it is transmitting data.</li>
+</ol></li>
+<li>Measure the current draw of the LCD screen.</li>
+</ol>
+<h4 id="deliverable-3">3.4.1 Deliverable 3</h4>
+<p>Document the current measurements that you took.</p>
+<hr />
+<h3 id="checkout">4 Checkout</h3>
+<p>Demonstrate that your system can control the Clock on the TM4C display data using the Blynk Application. Demonstrate that your system can read the sensor (extra credit) and time on the TM4C. Upload your software as instructed by your TA.</p>
+<hr />
+<h3 id="report">5 Report</h3>
+<h4 id="deliverables">5.1 Deliverables</h4>
+<ol type="1">
+<li>Objectives (1/2 page maximum)</li>
+<li>Hardware design (if you included a new sensor for the extra credit)</li>
+<li>Software design (upload your files as instructed by your TA)</li>
+<li><a href="#deliverable-1">Deliverable 1</a></li>
+<li><a href="#deliverable-2">Deliverable 2</a></li>
+<li><a href="#deliverable-3">Deliverable 3</a></li>
+</ol>
+<h4 id="analysis-and-discussion-questions">5.2 Analysis and Discussion Questions</h4>
+<p>Read the tutorial on the <a href="http://users.ece.utexas.edu/~valvano/Volume1/E-Book/C16_InternetOfThings.htm">Internet of Things</a> before answering the following questions:</p>
+<ol type="1">
+<li>In the client server paradigm, explain the sequence of internet communications sent from client to server and from server to client as the client saves data on the server. Assume the client already is connected to the WiFi AP and the client knows the IP address of the server.</li>
+<li>What is the purpose of the DNS?</li>
+<li>What is the difference between UDP and TCP/IP communication? More specifically when should we use UDP and when should we use TCP/IP?</li>
+</ol>
+</body>
+</html>

@@ -1,17 +1,22 @@
-# BLYNK.md
+# Blynk.md
 
 ## Table of Contents
-- [BLYNK.md](#blynkmd)
+- [Blynk.md](#blynkmd)
   - [Table of Contents](#table-of-contents)
   - [Prerequisites](#prerequisites)
   - [Creating a Blynk Device](#creating-a-blynk-device)
   - [Connecting Blynk to the TM4C](#connecting-blynk-to-the-tm4c)
   - [Updating ESP8266](#updating-esp8266)
+
+---  
+
 ## Prerequisites
 
 1. Hardware is setup (TM4C hooked up to ESP8266 via UART)
 2. ESP8266 is flashed with latest [firmware](https://github.com/ECE445L/EE445L-SP22-ESP8266-Blynk)
     1. See section [Updating ESP8266](#updating-esp8266)
+
+---
 
 ## Creating a Blynk Device
 
@@ -88,6 +93,8 @@
 
 ![Complete Mobile Dashboard](resources/lab4/images/blynk/palette_editor_complete.png)
 
+---
+
 ## Connecting Blynk to the TM4C
 
 1. [Create a Blynk device](#creating-a-blynk-device)
@@ -98,6 +105,7 @@
 4. Compile and flash program to TM4C
 5. If the HW is setup properly, then Blynk should say the device is online
 
+---
 ## Updating ESP8266
 
 1. Download the [Arduino IDE](https://www.arduino.cc/en/software)

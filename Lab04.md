@@ -25,10 +25,10 @@
     - [3.1 Power the Devices](#31-power-the-devices)
     - [3.2 Run the Out of Box Blynk Code](#32-run-the-out-of-box-blynk-code)
     - [3.3 Merge Lab 3](#33-merge-lab-3)
-      - [Deliverable 1](#deliverable-1)
-      - [Deliverable 2](#deliverable-2)
+      - [3.3.1 Deliverable 1](#331-deliverable-1)
+      - [3.3.2 Deliverable 2](#332-deliverable-2)
     - [3.4 Measure the Current](#34-measure-the-current)
-      - [Deliverable 3](#deliverable-3)
+      - [3.4.1 Deliverable 3](#341-deliverable-3)
     - [4 Checkout](#4-checkout)
     - [5 Report](#5-report)
       - [5.1 Deliverables](#51-deliverables)
@@ -141,7 +141,7 @@ and controlled.
 | ESP8266           | WiFi module       | from TA                       | $3.50     |
 | ST7735            | LCD module        | yours                         | $19.99    |
 | EK-TM4C123GXL     | TiVa LaunchPad    | yours                         | $12.99    |
-| Any analog sensor |                   | find it yourself (optional)   |           |
+| Any analog sensor | Extracredit       | find it yourself (optional)   | ???       |
 | LM2937-3.3        | 3.3V regulator    | from EER checkout desk        | $1.68     |
 
 ### 1.6 Specifications
@@ -333,9 +333,9 @@ ESP8266.*
 4. Test the ESP8266 and TM4C system. *Figure 4.8* shows the dataflow diagram
    between the WiFI module and the “Smart Object”.
 
-![Figure 4.8](resources/lab4/images/figure_4.8.png)
+![Figure 4.8](resources/lab4/images/figure_4.8.jpg)
 
-*Figure 4.8: ESP8266 ⇔ TM4C Dataflow Diagram*
+*Figure 4.8: ESP8266 and TM4C Dataflow Diagram*
 
 5. **Extra credit:** Interface a sensor and use the ADC to measure the signal.
    Calibrate the sensor so it reads data in a human understandable fashion. One
@@ -346,7 +346,7 @@ ESP8266.*
    to °F and °C. These values will be sent on virtual pins V70 to V99 to the
    Blynk App. Another possibility is the slide-pot from EE319K.
 
-#### Deliverable 1
+#### 3.3.1 Deliverable 1
 
 1. Add `DumpCapture` from `Lab2` to profile the interactions between the user
    and the alarm clock. For example, you can profile when button inputs occur
@@ -354,7 +354,7 @@ ESP8266.*
 2. Add `JitterMeasure` from `Lab2` to capture and measure the jitter within your
    clock's timer.
 
-#### Deliverable 2
+#### 3.3.2 Deliverable 2
 
 Take a screenshot of the Blynk interface illustrating the features of your system.
 
@@ -375,9 +375,11 @@ Take a screenshot of the Blynk interface illustrating the features of your syste
    2. While it is transmitting data.
 7. Measure the current draw of the LCD screen.
 
-#### Deliverable 3
+#### 3.4.1 Deliverable 3
 
 Document the current measurements that you took.
+
+---
 
 ### 4 Checkout
 
@@ -385,6 +387,8 @@ Demonstrate that your system can control the Clock on the TM4C display data
 using the Blynk Application. Demonstrate that your system can read the sensor
 (extra credit) and time on the TM4C. Upload your software as instructed by your
 TA.
+
+---
 
 ### 5 Report
 

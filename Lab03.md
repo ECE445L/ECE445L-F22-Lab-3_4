@@ -19,15 +19,15 @@
   - [2 Preparation](#2-preparation)
   - [3 Procedure](#3-procedure)
     - [3.1 Build Circuit and Critical Sections](#31-build-circuit-and-critical-sections)
-      - [Deliverable 1a](#deliverable-1a)
-      - [Deliverable 1b](#deliverable-1b)
+      - [3.1.1 Deliverable 1a](#311-deliverable-1a)
+      - [3.1.2 Deliverable 1b](#312-deliverable-1b)
     - [3.2 Measure Noise](#32-measure-noise)
-      - [Deliverable 2](#deliverable-2)
+      - [3.2.1 Deliverable 2](#321-deliverable-2)
     - [3.3 Measure Speaker Voltage](#33-measure-speaker-voltage)
-      - [Deliverable 3a (real oscilloscope)](#deliverable-3a-real-oscilloscope)
-      - [Deliverable 3b (TExaS oscilloscope)](#deliverable-3b-texas-oscilloscope)
+      - [3.3.1 Deliverable 3a (real oscilloscope)](#331-deliverable-3a-real-oscilloscope)
+      - [3.3.2 Deliverable 3b (TExaS oscilloscope)](#332-deliverable-3b-texas-oscilloscope)
     - [3.4 Measure Current Draw](#34-measure-current-draw)
-      - [Deliverable 4](#deliverable-4)
+      - [3.4.1 Deliverable 4](#341-deliverable-4)
   - [4 Checkout](#4-checkout)
   - [5 Lab Report](#5-lab-report)
     - [5.1 Deliverables](#51-deliverables)
@@ -168,12 +168,12 @@ Figure 3.2 shows a possible call graph of the system. Dividing the system into m
    critical. During checkout, the TA may ask you to prove that your system has
    no critical sections.
 
-#### Deliverable 1a
+#### 3.1.1 Deliverable 1a
 
 Draw the electrical circuit you used to create the alarm clock. You do not need
 to include any circuits on the LaunchPad (PF4-PF0 circuits).
 
-#### Deliverable 1b
+#### 3.1.2 Deliverable 1b
 
 Measure how long it takes the LCD graphics to update.
 
@@ -184,7 +184,7 @@ is to use the voltmeter in AC voltage mode. Theoretically one would expect
 this rms level to be zero, but the presence of noise will cause the rms value
 to be somewhere in the range of 0.5 to 5 mV.
 
-#### Deliverable 2
+#### 3.2.1 Deliverable 2
 
 Show the RMS noise level on the 3.3V with and without the alarm sounding.
 
@@ -202,7 +202,7 @@ voltage when the alarm is sounding.
 
 *Note: Do either 3a or 3b, but not both.*
 
-#### Deliverable 3a (real oscilloscope)
+#### 3.3.1 Deliverable 3a (real oscilloscope)
 
 If you have access to a real oscilloscope, use it to measure the speaker voltage
 when the alarm is sounding. I.e., measure the drain pin of the MOSFET (bottom
@@ -214,7 +214,7 @@ determine the current through the speaker. Measure the frequency of the sound.
 Place a picture of the scope trace like Figure 3.3a into your lab report, either
 a photo or digital downloaded image.
 
-#### Deliverable 3b (TExaS oscilloscope)
+#### 3.3.2 Deliverable 3b (TExaS oscilloscope)
 
 If you do not have access to a real scope, use the TExaS scope to measure the
 **gate** of the MOSFET (digital squarewave), like Figure 3.3b. Verify the sound
@@ -228,9 +228,11 @@ scope trace like Figure 3.3b into your lab manual.
 ### 3.4 Measure Current Draw
 
 Measure the total current drawn by the entire system:
-1. Set the DC power supply limits to 5V and 500mA
-2. Connect the DC power supply to the LaunchPad's VBUS and GND
-3. Measure the amount of current being drawn from the DC power supply
+1. Turn off power before connecting or disconnecting.
+2. Disconnect the USB cable from the PC.
+3. Set the DC power supply limits to +5V and 500mA
+4. Connect the DC power supply to the LaunchPad's VBUS and GND
+5. Measure the amount of current being drawn from the DC power supply
 
 Measure the current drawn by each device:
 1. Use a multimeter to measure the current running to each device separately
@@ -238,7 +240,7 @@ Measure the current drawn by each device:
     * Speaker
     * LCD screen
 
-#### Deliverable 4
+#### 3.4.1 Deliverable 4
 
 Show the system current and power usage with and without the alarm sounding.
 
@@ -291,12 +293,12 @@ Give short 1 or 2 sentence answers to these questions.
 
 1. The requirements document should change a couple of times during the lab as
    you determine features that can and cannot be performed. 
-2. You can interface an 8Ω or 32Ω speaker to an output port using an NPN MOSFET
+2. You can interface an 8ohm or 32ohm speaker to an output port using an NPN MOSFET
    like the IRLD120. A 10k resistor between digital output pin and gate reduces
    current surges but does not affect loudness. Loudness is determined by the
    voltage drop across the speaker. Connect the source to ground, and the drain
    to one side of the speaker. Connect the other side to +3.3V. The maximum IDS
-   of the transistor must be larger than 3.3V/8Ω or (3.3V/32Ω). The speaker has
+   of the transistor must be larger than 3.3V / 8ohm or (3.3V / 32ohm). The speaker has
    inductance, but the MOSFET includes an internal diode to remove back EMF when
    the transistor switches off. If you toggle the output pin in the background
    ISR, then sound will be generated. Loudness is determined by the voltage drop
@@ -331,7 +333,7 @@ Give short 1 or 2 sentence answers to these questions.
 
 8. If you use edge-triggered interrupts, build an analog filter to debounce each
    switch. Set R1=0, and R2=100k to create the negative logic switch. Choose R2
-   and C1 so the time constant (τ=R2*C1) is around 10 ms. Test the circuit with
+   and C1 so the time constant (tau=R2*C1) is around 10 ms. Test the circuit with
    a scope before connecting to the microcontroller.
 
 ![Hint 8a](resources/lab3/images/hint_8a.png)
