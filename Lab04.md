@@ -254,7 +254,7 @@ this circuit before attaching to ESP8266.*
 
 ### 2.1 Setting Up Blynk
 
-Read the instructions for running Blynk within [`BLYNK.md`](BLYNK.md).
+Read the instructions for running Blynk within [`BLYNK.md`](Blynk.md).
 
 ### 2.2 Edit `Lab3_4.c`
 
