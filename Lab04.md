@@ -141,7 +141,7 @@ and controlled.
 | ESP8266           | WiFi module       | from TA                       | $3.50     |
 | ST7735            | LCD module        | yours                         | $19.99    |
 | EK-TM4C123GXL     | TiVa LaunchPad    | yours                         | $12.99    |
-| Any analog sensor | Extracredit       | find it yourself (optional)   | ???       |
+| Any analog sensor | Extra credit      | find it yourself (optional)   | ???       |
 | LM2937-3.3        | 3.3V regulator    | from EER checkout desk        | $1.68     |
 
 ### 1.6 Specifications
@@ -337,14 +337,15 @@ ESP8266.*
 
 *Figure 4.8: ESP8266 and TM4C Dataflow Diagram*
 
-5. **Extra credit:** Interface a sensor and use the ADC to measure the signal.
+5. **Extra credit (5 points):** Interface a sensor and use the ADC to measure the signal.
+
    Calibrate the sensor so it reads data in a human understandable fashion. One
    possibility uses the TMP36 to read temperature. The datasheet for the TMP36
    is located at: [ADI_TMP36](https://www.analog.com/media/en/technical-documentation/data-sheets/TMP35_36_37.pdf).
 
    You will have to determine how to convert the output voltage from the TMP36
    to °F and °C. These values will be sent on virtual pins V70 to V99 to the
-   Blynk App. Another possibility is the slide-pot from EE319K.
+   Blynk App. Another option is to use a slide-pot or turn-pot.
 
 #### 3.3.1 Deliverable 1
 
@@ -360,24 +361,25 @@ Take a screenshot of the Blynk interface illustrating the features of your syste
 
 ### 3.4 Measure the Current
 
-1. Disconnect the USB cable from the PC.
-2. Set the DC power supply's limits to +5V and 200mA.
-3. Connect the +5V line to VBUS and GND to GND.
-4. Measure the voltage on the TM4C's 3.3V pin and the 3.3V line coming out of
-   the voltage regulator.
-5. Measure the whole unit's current for:
-   1. The clock without the ESP.
-   2. The clock with the alarm on and without the ESP.
-   3. The clock with the ESP.
-   4. The clock with the alarm on and with the ESP.
-6. Measure the current draw of the ESP:
-   1. While it is not transmitting data.
-   2. While it is transmitting data.
-7. Measure the current draw of the LCD screen.
+1. Disconnect the USB cable from the PC
+2. Set the DC power supply's limits to +5V and 400mA (if the current needs to be set to a higher limit, you may do so at your own risk)
+3. Connect the +5V line to VBUS and GND to GND
+4. Measure the voltage on the TM4C's 3.3V pin
+5. Measure the 3.3V line coming out of the voltage regulator
+6. Measure the entire system's current when it is running:
+   1. The alarm clock without the ESP
+   2. The alarm clock with the alarm on and without the ESP
+   3. The alarm clock with the ESP
+   4. The alarm clock with the alarm on and with the ESP
+7. Measure the current draw of the ESP (use a multimeter):
+   1. While it is not transmitting data
+   2. While it is transmitting data
+8. Measure the current draw of the LCD screen (use a multimeter)
+9. Calculate the power for each of the measurements your took
 
 #### 3.4.1 Deliverable 3
 
-Document the current measurements that you took.
+Document your current measurements and power calculations.
 
 ---
 
