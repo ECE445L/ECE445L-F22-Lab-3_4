@@ -14,8 +14,7 @@
     - [1.3 Team Size](#13-team-size)
     - [1.4 Background](#14-background)
     - [1.5 Required Hardware](#15-required-hardware)
-    - [1.6 Required Parts](#16-required-parts)
-    - [1.7 Requirements document](#17-requirements-document)
+    - [1.6 Requirements document](#16-requirements-document)
   - [2 Preparation](#2-preparation)
   - [3 Procedure](#3-procedure)
     - [3.1 Build Circuit and Critical Sections](#31-build-circuit-and-critical-sections)
@@ -89,35 +88,22 @@ The team size for this lab is 2.
 > Two shall be the number thou shalt count, and the number of the counting shall be two. Three shalt thou not count, neither count thou one, excepting that thou then proceed to two. Four is right out.
 
 ### 1.4 Background
-Labs in ECE445L are extremely open ended. For Labs 3, 4 and 5 you will be given a [requirements document](Requirements%20Document.docx). Your TA is your client or customer. A grade of B can be achieved by satisfying the minimum specifications listed by the document. To achieve higher grades, you are expected to expand sections 2.1 and 2.5 describing what your system will do. You are free to make any changes to this document as long you achieve the educational goals for the lab. All changes must be approved by your TA. Excellent grades are reserved for systems with extra features and are easy to operate. You will need your LaunchPad and color LCD. From checkout you can borrow speaker, switches, IRLD024 or IRLD120 MOSFET, 1N914, and some resistors for this lab.
+Labs in ECE445L are extremely open ended. For Labs 3, 4 and 5 you will be given a [requirements document](requirements_document.docx). Your TA is your client or customer. A grade of B can be achieved by satisfying the minimum specifications listed in the document. To achieve higher grades, you are expected to expand sections 2.1 and 2.5 describing what your system will do. You are free to make any changes to this document as long you achieve the educational goals for the lab. All changes must be approved by your TA. Excellent grades are reserved for systems with extra features and are easy to operate. You will need your LaunchPad and color LCD. From checkout you can borrow speaker, switches, IRLD024 or IRLD120 MOSFET, 1N914, and some resistors for this lab.
 
 ### 1.5 Required Hardware
 
-ECE445L groups should obtain these parts.
+| Part | Datasheet |
+|---|---|
+| EK-TM4C123GXL               | [TM4C123GH6PM datasheet]() |
+| Sitronix ST7735R Color LCD  | [ST7735R datasheet]() |
+| IRLD120 MOSFET              | [IRLD120 datasheet]() |
+| IRLD024 MOSFET              | [IRLD024 datasheet]() |
+| Tactile switch              | N/A |
+| Speaker (8Ω or 32Ω)         | N/A |
 
-| Part                          | Website                                                                       | Price     |
-| ----------------------------- | ----------------------------------------------------------------------------- | --------- |
-| EK-TM4C123GXL                 | [http://www.ti.com](http://www.ti.com)                                        | $12.99    |
-| Sitronix ST7735R Color LCD    | [http://www.adafruit.com/products/358](http://www.adafruit.com/products/358)  | $12.99    |
+### 1.6 Requirements document
 
-### 1.6 Required Parts
-
-These are available at the ECE checkout desk.
-
-| Part                  | www.mouser.com    | www.element14.com | www.digikey.com   | Price |
-| --------------------- | ----------------- | ----------------- | ----------------- | ----- |
-| IRLD120 MOSFET        | 844-IRLD120PBF    | 19K8369           | IRLD120PBF-ND     | $1.07 |
-| IRLD024 MOSFET        | 844-IRLD024PBF    | 19K8367           | IRLD024PBF-ND     | $1.12 |
-| Tactile switch        | 653-B3F-1050      | B3F-1050          | SW405-ND          | $0.29 |
-| Speaker (8 or 32 ohm) |                   |                   |                   |       |
-
-Any 8 to 32 ohm speaker will suffice, search for a speaker at
-* [https://www.mouser.com](https://www.mouser.com)
-* [https://www.digikey.com](https://www.digikey.com)
-* [https://www.element14.com](https://www.element14.com)
-
-### 1.7 Requirements document
-[Requirements Document.docx](Requirements%20Document.docx)
+Edit the [requirements document](requirements_document.docx) to reflect your system.
 
 ---
 
