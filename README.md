@@ -1,4 +1,4 @@
-# EE445L-SP22-Lab3-4
+# ECE445L-Lab3-4
 
 Lab 3 and 4 Template.
 
@@ -10,19 +10,19 @@ Lab 3 and 4 Template.
 
 ## HW
 
-The HW folder should contain your schematic and board files for your PCB or
+The hw folder should contain your schematic and board files for your PCB or
 circuits. In labs 1-5 and 10, you will be creating schematics for your circuit
 in EAGLE. A setup tutorial can be found
 [here](https://www.shawnvictor.net/autodesk-eagle.html). 
 
 ## SW
 
-The SW folder should contain your application firmware and software written for
-the lab. The SW/inc folder contains firmware drivers written for you by
+The sw folder should contain your application firmware and software written for
+the lab. The sw/inc folder contains firmware drivers written for you by
 Professor Valvano. Feel free to write your own (in fact, in some labs, you may
 be required to write your own). 
 
-You can place any other source files in the SW/ folder. TAs will look at the
+You can place any other source files in the sw/ folder. TAs will look at the
 files you create and/or modify for software quality and for running your
 project. 
 
