@@ -104,7 +104,7 @@ int main(void) {
 
 		/* Allow us to talk to the PC via PuTTy! Check device manager to see which
 	     COM serial port we are on. The baud rate is 115200 chars/s. */
-		UART_Init(7);
+		UART_Init();
 	
     /* Start up display. */
     ST7735_InitR(INITR_REDTAB);

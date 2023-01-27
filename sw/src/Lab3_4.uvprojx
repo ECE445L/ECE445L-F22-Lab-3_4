@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>./</IncludePath>
+              <IncludePath>./..</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -382,26 +382,6 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>doc</GroupName>
-          <Files>
-            <File>
-              <FileName>README.md</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\README.md</FilePath>
-            </File>
-            <File>
-              <FileName>Lab03.md</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Lab03.md</FilePath>
-            </File>
-            <File>
-              <FileName>BLYNK.md</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\BLYNK.md</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>src</GroupName>
           <Files>
             <File>
@@ -417,52 +397,52 @@
             <File>
               <FileName>startup.s</FileName>
               <FileType>2</FileType>
-              <FilePath>.\inc\startup.s</FilePath>
+              <FilePath>..\inc\startup.s</FilePath>
             </File>
             <File>
               <FileName>PLL.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\inc\PLL.c</FilePath>
+              <FilePath>..\inc\PLL.c</FilePath>
             </File>
             <File>
               <FileName>Unified_Port_Init.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\inc\Unified_Port_Init.c</FilePath>
+              <FilePath>..\inc\Unified_Port_Init.c</FilePath>
             </File>
             <File>
               <FileName>UART.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\inc\UART.c</FilePath>
+              <FilePath>..\inc\UART.c</FilePath>
             </File>
             <File>
               <FileName>Timer0A.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\inc\Timer0A.c</FilePath>
+              <FilePath>..\inc\Timer0A.c</FilePath>
             </File>
             <File>
               <FileName>Timer2A.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\inc\Timer2A.c</FilePath>
+              <FilePath>..\inc\Timer2A.c</FilePath>
             </File>
             <File>
               <FileName>LED.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\inc\LED.c</FilePath>
+              <FilePath>..\inc\LED.c</FilePath>
             </File>
             <File>
               <FileName>ST7735.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\inc\ST7735.c</FilePath>
+              <FilePath>..\inc\ST7735.c</FilePath>
             </File>
             <File>
               <FileName>esp8266_blynk.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\inc\esp8266_blynk.c</FilePath>
+              <FilePath>..\inc\esp8266_blynk.c</FilePath>
             </File>
             <File>
               <FileName>Blynk.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\inc\Blynk.c</FilePath>
+              <FilePath>..\inc\Blynk.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -472,7 +452,7 @@
             <File>
               <FileName>RGB.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\lib\RGB\RGB.c</FilePath>
+              <FilePath>..\lib\RGB\RGB.c</FilePath>
             </File>
           </Files>
         </Group>
