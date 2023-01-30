@@ -63,7 +63,7 @@
 #include "./lib/RGB/RGB.h"
 
 /* TODO: enable this for lab 4. */
-#define LAB_4 false
+#define LAB_4 true
 
 /* TODO: We suggest using the ./inc/ADCSWTrigger.h and the ./inc/TimerXA.h headers. */
 
@@ -92,19 +92,19 @@ void Pause(void);
 int main(void) {
     DisableInterrupts();
 
-	  /* Interrupts currently being used:
-	     Timer0A, pri7 - RGB flashing
-			 Timer2A, pri4 - ESP8266 sampling
-			 UART0, pri7 - PC communication
-			 UART5 (lab4), pri2 - ESP8266 communication
-	  */
-	
-    /* PLL Init. */
-		PLL_Init(Bus80MHz);
+    /* Interrupts currently being used:
+        Timer0A, pri7 - RGB flashing
+        Timer2A, pri4 - ESP8266 sampling
+        UART0, pri7 - PC communication
+        UART5 (lab4), pri2 - ESP8266 communication
+    */
 
-		/* Allow us to talk to the PC via PuTTy! Check device manager to see which
-	     COM serial port we are on. The baud rate is 115200 chars/s. */
-		UART_Init();
+    /* PLL Init. */
+    PLL_Init(Bus80MHz);
+
+    /* Allow us to talk to the PC via PuTTy! Check device manager to see which
+     COM serial port we are on. The baud rate is 115200 chars/s. */
+    UART_Init();
 	
     /* Start up display. */
     ST7735_InitR(INITR_REDTAB);
@@ -113,41 +113,41 @@ int main(void) {
     Unified_Port_Init();
     
     /* Start RGB flashing. WARNING! BRIGHT FLASHING COLORS. DO NOT RUN IF YOU HAVE EPILEPSY. */
-		RGBInit();
+    RGBInit();
 
-		/* Allows any enabled timers to begin running. */
+    /* Allows any enabled timers to begin running. */
     EnableInterrupts();
 
     /* Print starting message to the PC and the ST7735. */
     ST7735_FillScreen(ST7735_BLACK);
     ST7735_SetCursor(0, 0);
     ST7735_OutString(
-			"ECE445L Lab 3 & 4.\n"
-			"Press SW1 to start.\n");
+        "ECE445L Lab 3 & 4.\n"
+        "Press SW1 to start.\n");
     UART_OutString(
-			"ECE445L Lab 3 & 4.\r\n"
-			"Press SW1 to start.\r\n");
+        "ECE445L Lab 3 & 4.\r\n"
+        "Press SW1 to start.\r\n");
     Pause();
 		
-		/* Stop RGB and turn off any on LEDs. */
-		RGBStop();
-		PF1 = 0;
-		PF2 = 0;
-		PF3 = 0;
+    /* Stop RGB and turn off any on LEDs. */
+    RGBStop();
+    PF1 = 0;
+    PF2 = 0;
+    PF3 = 0;
 		
-		/* Reset screen. */
+    /* Reset screen. */
     ST7735_FillScreen(ST7735_BLACK);
     ST7735_SetCursor(0, 0);
-		ST7735_OutString("Starting...\n");
+    ST7735_OutString("Starting...\n");
     UART_OutString("Starting...\r\n");
 
     /* Setup ESP8266 to talk to Blynk server. See blynk.h for what each field does. */
     // TODO: enable this for lab 4
-		#if LAB_4
-			  #define USE_TIMER_INTERRUPT true
-			  blynk_init("EE-IOT-Platform-03", "g!TyA>hR2JTy", "1234567890", USE_TIMER_INTERRUPT);
-			  #undef USE_TIMER_INTERRUPT
-		#endif
+    #if LAB_4
+          #define USE_TIMER_INTERRUPT true
+          blynk_init("EE-IOT-Platform-03", "g!TyA>hR2JTy", "1234567890", USE_TIMER_INTERRUPT);
+          #undef USE_TIMER_INTERRUPT
+    #endif
 
     while (1) {
         /* TODO: Write your code here! */
