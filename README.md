@@ -2,7 +2,9 @@
 
 Lab 3 and 4 Template.
 
-[Lab 3 README](Lab03.docx)
+- Lab 3
+    - [pdf](Lab03.pdf)
+    - [docx](Lab03.docx)
 
 [Lab 4 README](Lab04D.docx)
 
@@ -12,8 +14,10 @@ Lab 3 and 4 Template.
 
 The hw folder should contain your schematic and board files for your PCB or
 circuits. In labs 3-11, you will be creating schematics for your circuit
-in EAGLE. A setup tutorial can be found
-[here](https://www.shawnvictor.net/autodesk-eagle.html).
+in KiCad. Here are some resources you can use to learn KiCad
+
+- [SparkFun](https://learn.sparkfun.com/tutorials/beginners-guide-to-kicad).
+- [KiCad Learning Resources](https://www.kicad.org/help/learning-resources/)
 
 ## SW
 
