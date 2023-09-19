@@ -63,7 +63,7 @@
 #include "./lib/RGB/RGB.h"
 
 /* TODO: enable this for lab 4. */
-#define LAB_4 false
+#define LAB_4 true
 
 /* TODO: We suggest using the ./inc/ADCSWTrigger.h and the ./inc/TimerXA.h headers. */
 

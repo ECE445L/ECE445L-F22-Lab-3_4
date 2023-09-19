@@ -62,11 +62,11 @@ static void RGBStep(void) {
 
 void RGBInit(void) {
     LED_Init();
-    Timer0A_Init(&RGBStep, REALTIMEPERIOD, 7); 
+    Timer0A_Init(&RGBStep, REALTIMEPERIOD); 
 }
 
 void RGBStart(void) {
-    Timer0A_Init(&RGBStep, REALTIMEPERIOD, 7); 
+    Timer0A_Init(&RGBStep, REALTIMEPERIOD); 
 }
 
 void RGBStop(void) {
