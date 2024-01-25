@@ -22,7 +22,6 @@
 #include "inc/MQTT.h"
 #include "inc//Unified_Port_Init.h"
 //#include "Lab4E.h"
-#include "inc/Clock.h"
 
 uint32_t         Mode_Value;      //
 uint32_t         Left_Value;      //
@@ -51,7 +50,6 @@ int main(void){
   UART5_Init();               // Enable ESP8266 Serial Port
   Reset_8266();               // Reset the WiFi module
   SetupWiFi();                // Setup communications to MQTT Broker via 8266 WiFi
-  //Init_Clock();								// Setup the Clock
   
   //Timer0_Init(&clock_1ms,80000);              // Timer0 trigger every 1ms 
   Timer2A_Init(&MQTT_to_TM4C, 400000, 7);         // Get data every 5ms 
