@@ -57,8 +57,6 @@ int main(void){
   Timer2A_Init(&MQTT_to_TM4C, 400000, 7);         // Get data every 5ms 
   Timer5A_Init(&TM4C_to_MQTT, 80000000, 7);       // Send data back to MQTT Web App every second 
   
-  //ADC0_InitTimer3ATriggerSeq3(33000000);    // Initialize the ADC that measures temperature.
-  
   EnableInterrupts();
 
   while(1){   
