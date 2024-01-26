@@ -41,7 +41,7 @@ void WaitForInterrupt(void);  // Go into low power mode
 // -----------------------------------------------------------------
 // -------------------- MAIN LOOP ----------------------------------
 //
-int main_4E(void){  
+int main(void){  
   DisableInterrupts();            // Disable interrupts until finished with inits     
   PLL_Init(Bus80MHz);             // Bus clock at 80 MHz
   UART_Init();                    // Allow us to talk to the PC via PuTTy!

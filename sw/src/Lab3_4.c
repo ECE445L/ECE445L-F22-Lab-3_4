@@ -89,7 +89,7 @@ void DelayWait10ms(uint32_t n);
 void Pause(void);
 
 /** Entry point. */
-int main(void) {
+int main_3(void) {
     DisableInterrupts();
 
     /* Interrupts currently being used:

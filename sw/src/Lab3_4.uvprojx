@@ -449,6 +449,11 @@
               <FileType>1</FileType>
               <FilePath>..\inc\Blynk.c</FilePath>
             </File>
+            <File>
+              <FileName>MQTT.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\inc\MQTT.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
