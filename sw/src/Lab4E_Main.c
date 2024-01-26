@@ -51,7 +51,7 @@ void pause(void){
 // -----------------------------------------------------------------
 // -------------------- MAIN LOOP ----------------------------------
 //
-int main(void){  
+int Lab4E_main(void){  
   DisableInterrupts();            // Disable interrupts until finished with inits     
   PLL_Init(Bus80MHz);             // Bus clock at 80 MHz
   UART_Init();                    // Allow us to talk to the PC via PuTTy!
