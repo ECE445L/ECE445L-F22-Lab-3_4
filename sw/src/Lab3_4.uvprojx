@@ -10,7 +10,7 @@
       <TargetName>Lab 3_4</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6180000::V6.18::ARMCLANG</pCCUsed>
+      <pCCUsed>6190000::V6.19::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -440,19 +440,24 @@
               <FilePath>..\inc\ST7735.c</FilePath>
             </File>
             <File>
-              <FileName>esp8266_blynk.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\inc\esp8266_blynk.c</FilePath>
-            </File>
-            <File>
-              <FileName>Blynk.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\inc\Blynk.c</FilePath>
-            </File>
-            <File>
               <FileName>MQTT.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\inc\MQTT.c</FilePath>
+            </File>
+            <File>
+              <FileName>esp8266_base.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\inc\esp8266_base.c</FilePath>
+            </File>
+            <File>
+              <FileName>UART5.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\inc\UART5.c</FilePath>
+            </File>
+            <File>
+              <FileName>Timer5A.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\inc\Timer5A.c</FilePath>
             </File>
           </Files>
         </Group>
