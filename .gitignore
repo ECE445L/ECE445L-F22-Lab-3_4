@@ -150,3 +150,6 @@ RemoteSystemsTempFiles/
 
 # API autogen documentation.
 resources/Documentation
+
+# Microsoft Office Temp files 
+~$*
