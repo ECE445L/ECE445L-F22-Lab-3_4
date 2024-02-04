@@ -141,14 +141,6 @@ int main(void) {
     ST7735_OutString("Starting...\n");
     UART_OutString("Starting...\r\n");
 
-    /* Setup ESP8266 to talk to Blynk server. See blynk.h for what each field does. */
-    // TODO: enable this for lab 4
-    #if LAB_4
-          #define USE_TIMER_INTERRUPT true
-          blynk_init("EE-IOT-Platform-03", "g!TyA>hR2JTy", "1234567890", USE_TIMER_INTERRUPT);
-          #undef USE_TIMER_INTERRUPT
-    #endif
-
     while (1) {
         /* TODO: Write your code here! */
         WaitForInterrupt();
